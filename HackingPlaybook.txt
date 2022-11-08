@@ -541,7 +541,9 @@ TABLE OF CONTENTS
         52.2 ATTACK VECTOR
                 - During authentication phase, credentials sent in plaintext. 
 
-
+ATTACK PATH
+1. AUTHENTICATION
+        
 
 
 
