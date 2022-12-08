@@ -566,6 +566,20 @@ ATTACK PATH
         2.5 SESSION TERMINATION
                 2.5.1 Excessive duration
                 2.5.2 Logout should invalidate token
+3. ACCESS CONTROL
+        3.1 INSUFFICIENT AUTHORIZATION CHECKS
+                3.1.1 AUTORIZE
+        3.2 CSRF
+        3.3 OVERLY PERMISSIVE CORS
+4. INPUT VALIDATION
+        4.1 XSS
+                4.1.1 XSS polyglot testing
+        4.2 SQL INJECTION
+        4.3 XXE INJECTION
+        4.4 URL REDIRECTS
+5. CRYPTOGRAPHY
+6. FILE UPLOAD
+7. TLS CONNECTION
 
 TLS
 CSRF
