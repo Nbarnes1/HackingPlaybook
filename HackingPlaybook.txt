@@ -66,6 +66,8 @@ TABLE OF CONTENTS
                         https://0a6c00cb04681a13c0f2cfe7000800d9.web-security-academy.net/#<img%20src=x%20onerror=alert(1)>
                 2.3.3 
                         - Check if user input is used in eval() anywhere.
+                2.3.4
+                        - Check if user input is used in DOM statements such as "document.write" or "document.innerHTML"
 
         2.4 EXFILTRATING A VICTIM'S COOKIES
                 2.4.1 WEBSERVER REDIRECTION
@@ -495,6 +497,11 @@ TABLE OF CONTENTS
                 20.4.3 WRITING FILE
                         ' UNION SELECT 1,...,N-1, "<FILECONTENTS"> into OUTFILE '<DESTINATIONPATH>' -- 
                         source: [11]
+        20.5 EXPLOITATION TARGETS
+                20.5.1 STEAL PASSWORD RESET KEY FOR ATO
+                20.5.2 STEAL PASSWORD HASHES
+                20.5.2 WRITE TO FILESYSTEM
+        20.6 DATABASE COLLATION
 
         
 21. SQLMAP
@@ -529,7 +536,7 @@ TABLE OF CONTENTS
                 22.3.3 JAVASCRIPT
                         ${ 7 * 7 } will resolve to 49.
         22.4 SEARCHING FOR EXPLOITABLE CLASSES
-                22.4.1
+                22.4.1 JINJA
                         {{ ''.__class__.__mro__[1].__subclasses__()[0:10] }}
                         Returns first 10 classes. Iterate and identify exploitable classes. 
         22.5 EXPLOITABLE CLASSES
@@ -647,8 +654,10 @@ ATTACK PATH
 6. FILE UPLOAD
 7. TLS CONNECTION
 
-TLS
-CSRF
+ENUMERATION NUDGES
+- Existence of "dist" directory within website js files. Indicates existence of unnecessary files in the directory that could expand the attack surface. 
+        - Confirm this by accessing README.md. I.e. "https://openitcockpit/js/vendor/gridstack/README.md"
+        - Exploit by finding DOM XSS in included html files
 
 
 
