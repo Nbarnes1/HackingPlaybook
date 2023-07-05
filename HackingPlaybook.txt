@@ -563,6 +563,11 @@ TABLE OF CONTENTS
                                 select schemaname,tablename,tableowner from pg_tables;
                         20.7.4.4 COLUMNS
                                 SELECT column_name FROM information_schema.columns WHERE table_name='data_table'
+        20.8 MICROSOFT SQL (MSSQL) SPECIFIC
+                20.8.1 ENUMERATION
+                        20.8.1.1 RETURN 1 ROW
+                                - Alternative to LIMIT and OFFSET keywords
+                                ... ORDER by <column> OFFSET <index> ROWS FETCH NEXT 1 ROWS ONLY;
 
         
 21. SQLMAP
