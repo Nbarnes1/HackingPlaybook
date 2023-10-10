@@ -173,6 +173,23 @@ TABLE OF CONTENTS
                 3.2.2 Sessions
                         - By default, sudo honors session segregation. You would have to authenticate for two separate windows.
                         - tty_tickets flag controls this
+4. DESERIALIZATION ATTACKS
+        4.1 .NET
+                4.1.1 DETECTION
+                        4.1.1.1 SOURCE CODE SCAN [44]
+                                - The following terms are suspect
+                                        TypeNameHandling
+                                        JavaScriptTypeResolver
+                                        BinaryFormatter
+                                - Ensure XmlSerializer is not dynamically instantiated: [46]
+                                        XmlSerializer(typeof(<TYPE>))
+                        4.1.1.2 BLACK BOX [45]
+                                - Search for the following b64 encoded prefixes
+                                        AAEAAD = .NET BinaryFormatter
+                                        FF01 = .NET ViewState
+
+
+                                
 
 5. WEBSITE ENUMERATION
         5.1 BASICS
@@ -790,6 +807,9 @@ References
 [41] https://book.hacktricks.xyz/network-services-pentesting/pentesting-postgresql
 [42] https://pentestmonkey.net/cheat-sheet/sql-injection/postgres-sql-injection-cheat-sheet
 [43] https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/PostgreSQL%20Injection.md#postgresql-list-columns
+[44] https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html#whitebox-review_3
+[45] https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Deserialization/DotNET.md#detection
+[46] https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Deserialization/DotNET.md#xmlserializer
 
 
 
