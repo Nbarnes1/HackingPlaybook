@@ -1,0 +1,187 @@
+{
+  "main": {
+    "id": "4a1cc2be448accdc",
+    "type": "split",
+    "children": [
+      {
+        "id": "18dfff864ebbf69d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9991353e4c1e13b2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ObsidianPlaybook.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d74dca1085c6141a",
+    "type": "split",
+    "children": [
+      {
+        "id": "f68412b57c20caef",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2959cbb2a29ecf55",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "c9c91f2602aaabf3",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "38ff4da75a32a9fe",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          },
+          {
+            "id": "6c7bedee47616202",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "ObsidianPlaybook.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 298.5
+  },
+  "right": {
+    "id": "6d1c5ba2afe17a81",
+    "type": "split",
+    "children": [
+      {
+        "id": "c109b1d0e3f32265",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ea3d2cce85455ce2",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "ObsidianPlaybook.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "a79d3048d6009249",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "ObsidianPlaybook.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "045be56cd862f43e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "82c217781e37e7c0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "ObsidianPlaybook.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "custom-sort:Toggle custom sorting": false,
+      "header-enhancer:Header Enhancer": false
+    }
+  },
+  "active": "9991353e4c1e13b2",
+  "lastOpenFiles": [
+    "Web/SQL Injection/Testing.md",
+    "Web/SQL Injection/SQL.md",
+    "Web/File Inclusion/Local File Inclusion/Directory Traversal.md",
+    "Web/File Inclusion/Local File Inclusion/PHP Wrappers.md",
+    "ObsidianPlaybook.md",
+    "Web/Web.md",
+    "Web/File Inclusion/Local File Inclusion/Local File Inclusion.md",
+    "Web/Cross-Site Scripting (XSS)/_Index_of_Cross-Site Scripting (XSS).md",
+    "Web/File Inclusion/File Inclusion.md",
+    "Web/File Inclusion/_Index_of_File Inclusion.md",
+    "Web/File Inclusion/Remote File Inclusion/Remote File Inclusion.md",
+    "Web/File Inclusion/Remote File Inclusion",
+    "Web/File Inclusion/Local File Inclusion",
+    "Web/SSTI/SSTI.md",
+    "Web/SQL Injection/SQL Injection.md",
+    "_Index_of_ObsidianPlaybook.md",
+    "Web/_Index_of_Web.md",
+    "Web/Cross-Site Scripting (XSS)/Cross-Site Scripting (XSS).md",
+    "Web/File Inclusion",
+    "Web/SSTI",
+    "Web/SQL Injection",
+    "Web/Cross-Site Scripting (XSS)",
+    "Web"
+  ]
+}
