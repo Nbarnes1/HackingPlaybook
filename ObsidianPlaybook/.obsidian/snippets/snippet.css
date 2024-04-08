@@ -6,8 +6,13 @@
 .markdown-preview-view h6 {
     margin-bottom: 0em;
     margin-top: 0.5em;
+    padding: 0;
 }
 
 .markdown-preview-view div {
-    margin-bottom: 0em;
+    margin-bottom: -.25em;
+}
+
+.is-live-preview .cm-content > .HyperMD-header {
+    --p-spacing: 0px;
 }
