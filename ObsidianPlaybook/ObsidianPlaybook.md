@@ -1518,6 +1518,7 @@ RCPT TO: <test@example.com>
 ## 23.7	TLS CONNECTION
 
 # 24	Threat Modeling
+
 ## 24.1	STRIDE
 - Spoofing
 - Tampering
@@ -1526,14 +1527,24 @@ RCPT TO: <test@example.com>
 - Denial of Service
 - Escalation of Privileges
 
+## 24.2	Secure Design Order of Precedence
+- Eliminate
+	- Among design alternatives, select those that eliminate potential for risk/loss
+- Protect, Built-In
+	- Within a selected design, select means to reduce risk/loss potential (reduce interfaces, segment, etc)
+- Protect, Bolt-On
+	- Incorporate engineered features to control loss potential
+- Detect/Respond
+	- Provide visibility and feedback to external entities
+- Administrative
+	- Incorporate signage, training, etc
+
   
 
-ENUMERATION NUDGES
+# ENUMERATION NUDGES
 
 - Existence of "dist" directory within website js files. Indicates existence of unnecessary files in the directory that could expand the attack surface.
-
 - Confirm this by accessing README.md. I.e. "https://openitcockpit/js/vendor/gridstack/README.md"
-
 - Exploit by finding DOM XSS in included html files
 
   
