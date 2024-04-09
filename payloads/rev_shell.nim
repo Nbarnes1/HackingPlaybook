@@ -1,6 +1,9 @@
 #[ 
    Created by Sn1r
    https://github.com/Sn1r/
+   Compilation: 
+   nim c -d:mingw --cpu:amd64 /tmp/reverse_shell.nim
+   strip /tmp/reverse_shell.exe
  ]#
 
 import net, os, osproc, strutils
