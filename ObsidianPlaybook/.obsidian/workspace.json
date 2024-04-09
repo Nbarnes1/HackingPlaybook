@@ -171,8 +171,7 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "header-enhancer:Header Enhancer": false
+      "command-palette:Open command palette": false
     }
   },
   "active": "9991353e4c1e13b2",
