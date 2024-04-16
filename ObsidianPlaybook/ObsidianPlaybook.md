@@ -1574,7 +1574,12 @@ python3 -m http.server 80 --directory /tmp
 - Confirm this by accessing README.md. I.e. "https://openitcockpit/js/vendor/gridstack/README.md"
 - Exploit by finding DOM XSS in included html files
 
-  
+# 28	MISCELLANEOUS TRICKS
+## 28.1	PYTHON VENV
+```
+python3 -m venv venv
+. venv/bin/activate
+```
   
   
   
