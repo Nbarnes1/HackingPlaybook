@@ -93,8 +93,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -176,8 +175,9 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "c9c91f2602aaabf3",
+  "active": "2959cbb2a29ecf55",
   "lastOpenFiles": [
+    "Malware Dev",
     "Web/SQL Injection/Testing.md",
     "Web/SQL Injection/SQL.md",
     "Web/File Inclusion/Local File Inclusion/Directory Traversal.md",
