@@ -175,14 +175,15 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "2959cbb2a29ecf55",
+  "active": "9991353e4c1e13b2",
   "lastOpenFiles": [
+    "Malware Dev/Test.md",
+    "ObsidianPlaybook.md",
     "Malware Dev",
     "Web/SQL Injection/Testing.md",
     "Web/SQL Injection/SQL.md",
     "Web/File Inclusion/Local File Inclusion/Directory Traversal.md",
     "Web/File Inclusion/Local File Inclusion/PHP Wrappers.md",
-    "ObsidianPlaybook.md",
     "Web/Web.md",
     "Web/File Inclusion/Local File Inclusion/Local File Inclusion.md",
     "Web/Cross-Site Scripting (XSS)/_Index_of_Cross-Site Scripting (XSS).md",
