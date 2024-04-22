@@ -18,8 +18,19 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "b92c323a797ad76d",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.5.12"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "b0f5d6a16c50b517",
@@ -93,7 +104,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -175,15 +187,15 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "9991353e4c1e13b2",
+  "active": "b92c323a797ad76d",
   "lastOpenFiles": [
     "Malware Dev/Test.md",
-    "ObsidianPlaybook.md",
     "Malware Dev",
     "Web/SQL Injection/Testing.md",
     "Web/SQL Injection/SQL.md",
     "Web/File Inclusion/Local File Inclusion/Directory Traversal.md",
     "Web/File Inclusion/Local File Inclusion/PHP Wrappers.md",
+    "ObsidianPlaybook.md",
     "Web/Web.md",
     "Web/File Inclusion/Local File Inclusion/Local File Inclusion.md",
     "Web/Cross-Site Scripting (XSS)/_Index_of_Cross-Site Scripting (XSS).md",
