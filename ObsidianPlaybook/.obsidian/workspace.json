@@ -23,9 +23,11 @@
             "id": "b92c323a797ad76d",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.5.12"
+                "file": "ObsidianPlaybook.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -187,7 +189,7 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "b92c323a797ad76d",
+  "active": "6c7bedee47616202",
   "lastOpenFiles": [
     "Malware Dev/Test.md",
     "Malware Dev",
