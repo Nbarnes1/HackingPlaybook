@@ -490,7 +490,7 @@ document.location="http://stock.YOUR-LAB-ID.web-security-academy.net/?productId=
 
 ## BASIC
 
-## CSRF WITH JSON PAYLOAD
+## CSRF WITH JSON PAYLOAD [48], [49]
 
 - Problem: When submitting a JSON payload with Burp-generated PoC, it will end up looking like below, with an extra '=' character at the end. This is because it's trying to emulate a form parameter like "param1=value1".
 ```
@@ -1659,3 +1659,5 @@ References
 [45] https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Deserialization/DotNET.md#detection
 [46] https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Deserialization/DotNET.md#xmlserializer
 [47] https://github.com/Sn1r/Nim-Reverse-Shell
+[48] https://www.directdefense.com/csrf-in-the-age-of-json/
+[49] https://blog.appsecco.com/exploiting-csrf-on-json-endpoints-with-flash-and-redirects-681d4ad6b31b

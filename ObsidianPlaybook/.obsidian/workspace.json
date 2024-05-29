@@ -6,6 +6,7 @@
       {
         "id": "18dfff864ebbf69d",
         "type": "tabs",
+        "dimension": 50,
         "children": [
           {
             "id": "9991353e4c1e13b2",
@@ -37,6 +38,7 @@
       {
         "id": "b0f5d6a16c50b517",
         "type": "tabs",
+        "dimension": 50,
         "children": [
           {
             "id": "fb636665c94f7d0c",
@@ -189,7 +191,7 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "6c7bedee47616202",
+  "active": "b92c323a797ad76d",
   "lastOpenFiles": [
     "Malware Dev/Test.md",
     "Malware Dev",
