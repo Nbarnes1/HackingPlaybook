@@ -6,7 +6,6 @@
       {
         "id": "18dfff864ebbf69d",
         "type": "tabs",
-        "dimension": 50,
         "children": [
           {
             "id": "9991353e4c1e13b2",
@@ -19,26 +18,12 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "b92c323a797ad76d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ObsidianPlaybook.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "b0f5d6a16c50b517",
         "type": "tabs",
-        "dimension": 50,
         "children": [
           {
             "id": "fb636665c94f7d0c",
@@ -191,7 +176,7 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "b92c323a797ad76d",
+  "active": "9991353e4c1e13b2",
   "lastOpenFiles": [
     "Malware Dev/Test.md",
     "Malware Dev",
