@@ -1,0 +1,1 @@
+- For CSRF to work
