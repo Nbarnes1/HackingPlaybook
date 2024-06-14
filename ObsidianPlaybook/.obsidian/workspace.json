@@ -18,8 +18,19 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "445bf2bb7b469d26",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.6.3"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "b0f5d6a16c50b517",
@@ -176,7 +187,7 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "9991353e4c1e13b2",
+  "active": "445bf2bb7b469d26",
   "lastOpenFiles": [
     "Malware Dev/Test.md",
     "Malware Dev",
