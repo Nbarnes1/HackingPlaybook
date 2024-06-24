@@ -6,6 +6,7 @@
       {
         "id": "18dfff864ebbf69d",
         "type": "tabs",
+        "dimension": 50,
         "children": [
           {
             "id": "9991353e4c1e13b2",
@@ -20,12 +21,12 @@
             }
           },
           {
-            "id": "b94ebe9695b51610",
+            "id": "b92c323a797ad76d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CSRF.md",
+                "file": "ObsidianPlaybook.md",
                 "mode": "source",
                 "source": false
               }
@@ -33,6 +34,25 @@
           }
         ],
         "currentTab": 1
+      },
+      {
+        "id": "b0f5d6a16c50b517",
+        "type": "tabs",
+        "dimension": 50,
+        "children": [
+          {
+            "id": "fb636665c94f7d0c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ObsidianPlaybook.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -84,11 +104,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CSRF.md"
+                "file": "ObsidianPlaybook.md"
               }
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -108,7 +129,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CSRF.md",
+                "file": "ObsidianPlaybook.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,7 +146,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CSRF.md",
+                "file": "ObsidianPlaybook.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -148,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CSRF.md"
+                "file": "ObsidianPlaybook.md"
               }
             }
           }
@@ -170,7 +191,7 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "b94ebe9695b51610",
+  "active": "b92c323a797ad76d",
   "lastOpenFiles": [
     "CSRF.md",
     "Malware Dev/Test.md",
