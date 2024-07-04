@@ -31,9 +31,19 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "19c6782240046927",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.6.5"
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       },
       {
         "id": "b0f5d6a16c50b517",
@@ -191,7 +201,7 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "b92c323a797ad76d",
+  "active": "19c6782240046927",
   "lastOpenFiles": [
     "CSRF.md",
     "Malware Dev/Test.md",
