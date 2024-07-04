@@ -32,12 +32,12 @@
             }
           },
           {
-            "id": "7fbb09e82a22110c",
+            "id": "2cbcc0a7ddf7f70f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SSL.md",
+                "file": "Fix DNS and IP in Kali.md",
                 "mode": "source",
                 "source": false
               }
@@ -96,7 +96,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SSL.md"
+                "file": "Fix DNS and IP in Kali.md"
               }
             }
           }
@@ -120,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SSL.md",
+                "file": "Fix DNS and IP in Kali.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SSL.md",
+                "file": "Fix DNS and IP in Kali.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -160,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SSL.md"
+                "file": "Fix DNS and IP in Kali.md"
               }
             }
           }
@@ -182,9 +182,10 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "7fbb09e82a22110c",
+  "active": "2cbcc0a7ddf7f70f",
   "lastOpenFiles": [
     "CSRF.md",
+    "Fix DNS and IP in Kali.md",
     "SSL.md",
     "ObsidianPlaybook.md",
     "Malware Dev/Test.md",
