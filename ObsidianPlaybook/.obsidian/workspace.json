@@ -20,31 +20,19 @@
             }
           },
           {
-            "id": "b92c323a797ad76d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSRF.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "2cbcc0a7ddf7f70f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Fix DNS and IP in Kali.md",
+                "file": "PJMT/Resources.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -96,7 +84,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Fix DNS and IP in Kali.md"
+                "file": "PJMT/Resources.md"
               }
             }
           }
@@ -120,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Fix DNS and IP in Kali.md",
+                "file": "PJMT/Resources.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +125,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Fix DNS and IP in Kali.md",
+                "file": "PJMT/Resources.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -160,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Fix DNS and IP in Kali.md"
+                "file": "PJMT/Resources.md"
               }
             }
           }
@@ -184,10 +172,13 @@
   },
   "active": "2cbcc0a7ddf7f70f",
   "lastOpenFiles": [
+    "PJMT/Intro.md",
+    "PJMT/Resources.md",
+    "ObsidianPlaybook.md",
     "CSRF.md",
     "Fix DNS and IP in Kali.md",
+    "PJMT",
     "SSL.md",
-    "ObsidianPlaybook.md",
     "Malware Dev/Test.md",
     "Malware Dev",
     "Web/SQL Injection/Testing.md",
