@@ -5,3 +5,13 @@
 		- Modern translation layer from bytecode to device instructions
 		- Every app runs in its own sandboxed virtual machine
 			- Every single application in the Android phone runs in its own sandbox VM, and is assigned its own folder with its own owner
+- Profiles
+	- Used to separate App Data into various use cases
+		- I.e. Work Profile, Personal Profile, etc. 
+- Architecture Model
+	- System Apps
+	- Java API Framework
+	- Native C/C++ Libraries
+	- Android Runtime
+	- Hardware Abstraction Layer (HAL)
+	- Linux Kernel
