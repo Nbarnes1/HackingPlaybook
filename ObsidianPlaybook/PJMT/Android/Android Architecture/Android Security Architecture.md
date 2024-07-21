@@ -1,1 +1,4 @@
-- 
+- Every application on Android is run in a virtual machine known as Android Runtime
+	- **Dalvin** was the original runtime, and is still referenced. 
+		- Dalvin is not used in modern Android
+	- 
