@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PJMT/Device Requirements.md",
+                "file": "PJMT/Android/Android Architecture/Android Security Architecture.md",
                 "mode": "source",
                 "source": false
               }
@@ -84,7 +84,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PJMT/Device Requirements.md"
+                "file": "PJMT/Android/Android Architecture/Android Security Architecture.md"
               }
             }
           }
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "PJMT/Device Requirements.md",
+                "file": "PJMT/Android/Android Architecture/Android Security Architecture.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,7 +125,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "PJMT/Device Requirements.md",
+                "file": "PJMT/Android/Android Architecture/Android Security Architecture.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -148,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PJMT/Device Requirements.md"
+                "file": "PJMT/Android/Android Architecture/Android Security Architecture.md"
               }
             }
           }
@@ -172,8 +172,11 @@
   },
   "active": "2cbcc0a7ddf7f70f",
   "lastOpenFiles": [
-    "Malware Dev/Test.md",
+    "PJMT/Android/Android Architecture",
     "PJMT/Device Requirements.md",
+    "PJMT/Android/Android Architecture/Android Security Architecture.md",
+    "PJMT/Android",
+    "Malware Dev/Test.md",
     "PJMT/Resources.md",
     "CSRF.md",
     "Fix DNS and IP in Kali.md",
