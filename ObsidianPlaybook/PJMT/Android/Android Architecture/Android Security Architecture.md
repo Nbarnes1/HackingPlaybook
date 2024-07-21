@@ -1,4 +1,7 @@
 - Every application on Android is run in a virtual machine known as Android Runtime
 	- **Dalvin** was the original runtime, and is still referenced. 
 		- Dalvin is not used in modern Android
-	- 
+	- **Android Runtime (ART)**
+		- Modern translation layer from bytecode to device instructions
+		- Every app runs in its own sandboxed virtual machine
+			- Every single application in the Android phone runs in its own sandbox VM, and is assigned its own folder with its own owner
