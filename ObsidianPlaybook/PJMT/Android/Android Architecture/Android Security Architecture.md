@@ -14,4 +14,6 @@
 	- Native C/C++ Libraries
 	- Android Runtime
 	- Hardware Abstraction Layer (HAL)
+		- Allows applications to access hardware components irrespective of the device manufacturer or type
+		- Allows apps to access camera, microphone, bluetooth, etc without needing specific drivers or manufacturer details
 	- Linux Kernel
