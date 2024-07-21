@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PJMT/Android/Android Architecture/Android Security Architecture.md",
+                "file": "PJMT/Android/Android Architecture/Application Security and Signing.md",
                 "mode": "source",
                 "source": false
               }
@@ -84,7 +84,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PJMT/Android/Android Architecture/Android Security Architecture.md"
+                "file": "PJMT/Android/Android Architecture/Application Security and Signing.md"
               }
             }
           }
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "PJMT/Android/Android Architecture/Android Security Architecture.md",
+                "file": "PJMT/Android/Android Architecture/Application Security and Signing.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,7 +125,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "PJMT/Android/Android Architecture/Android Security Architecture.md",
+                "file": "PJMT/Android/Android Architecture/Application Security and Signing.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -148,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PJMT/Android/Android Architecture/Android Security Architecture.md"
+                "file": "PJMT/Android/Android Architecture/Application Security and Signing.md"
               }
             }
           }
@@ -172,9 +172,11 @@
   },
   "active": "2cbcc0a7ddf7f70f",
   "lastOpenFiles": [
+    "Pasted image 20240721163854.png",
+    "PJMT/Android/Android Architecture/Android Security Architecture.md",
+    "PJMT/Android/Android Architecture/Application Security and Signing.md",
     "PJMT/Android/Android Architecture",
     "PJMT/Device Requirements.md",
-    "PJMT/Android/Android Architecture/Android Security Architecture.md",
     "PJMT/Android",
     "Malware Dev/Test.md",
     "PJMT/Resources.md",
@@ -205,7 +207,6 @@
     "Web/File Inclusion",
     "Web/SSTI",
     "Web/SQL Injection",
-    "Web/Cross-Site Scripting (XSS)",
-    "Web"
+    "Web/Cross-Site Scripting (XSS)"
   ]
 }

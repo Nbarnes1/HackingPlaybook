@@ -1,0 +1,4 @@
+- Every Android application can be reverse-engineered, rebuilt, re-signed, and re-run
+- Application signing ensures integrity
+	- ![[Pasted image 20240721163854.png|500]]
+- 
