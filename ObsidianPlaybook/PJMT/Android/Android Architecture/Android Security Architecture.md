@@ -11,6 +11,8 @@
 - Architecture Model
 	- System Apps
 	- Java API Framework
+		- Lets you interact with other apps
+			- Content Providers: a way of sharing data to other applications
 	- Native C/C++ Libraries
 	- Android Runtime
 	- Hardware Abstraction Layer (HAL)
