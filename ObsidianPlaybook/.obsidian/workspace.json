@@ -30,9 +30,19 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "84655de69ce26952",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.6.7"
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -170,7 +180,7 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "2cbcc0a7ddf7f70f",
+  "active": "84655de69ce26952",
   "lastOpenFiles": [
     "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
     "Pwn College/Introduction and Usage.md",
