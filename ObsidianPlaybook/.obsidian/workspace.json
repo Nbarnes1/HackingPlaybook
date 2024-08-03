@@ -35,9 +35,11 @@
             "id": "84655de69ce26952",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.6.7"
+                "file": "ObsidianPlaybook.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -94,11 +96,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Pwn College/Introduction and Usage.md"
+                "file": "ObsidianPlaybook.md"
               }
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -118,7 +121,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Pwn College/Introduction and Usage.md",
+                "file": "ObsidianPlaybook.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -135,7 +138,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Pwn College/Introduction and Usage.md",
+                "file": "ObsidianPlaybook.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -158,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Pwn College/Introduction and Usage.md"
+                "file": "ObsidianPlaybook.md"
               }
             }
           }
@@ -180,7 +183,7 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "84655de69ce26952",
+  "active": "6c7bedee47616202",
   "lastOpenFiles": [
     "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
     "Pwn College/Introduction and Usage.md",
