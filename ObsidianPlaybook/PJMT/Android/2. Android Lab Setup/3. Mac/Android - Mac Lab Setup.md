@@ -3,3 +3,12 @@
 - Install JADX-GUI
 	- Terminal Command to install: brew install jadx
 	- To run the tool: jadx-gui
+- Install apktool
+	- To install apktool: brew install apktool
+	- To run the tool: 
+		- apktool d <target.apk> - decompile an apk
+		- apktool b <target.apk> - build an apk
+- Install Android Studio
+	- [https://developer.android.com/studio](https://developer.android.com/studio)
+	- [https://developer.android.com/studio/intro](https://developer.android.com/studio/intro)
+	- Install Android Platform tools on Mac: brew install android-platform-tools
