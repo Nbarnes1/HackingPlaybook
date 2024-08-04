@@ -4,3 +4,4 @@
 - JADX-GUI Releases: [https://github.com/skylot/jadx/releases/tag/v1.2.0](https://github.com/skylot/jadx/releases/tag/v1.2.0)
 
 ## adb Install
+- 

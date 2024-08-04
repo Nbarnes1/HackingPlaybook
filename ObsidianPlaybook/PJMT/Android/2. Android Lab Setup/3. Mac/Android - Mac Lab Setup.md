@@ -1,0 +1,5 @@
+- Install Brew
+	- Brew Install Link: [https://brew.sh/](https://brew.sh/)
+- Install JADX-GUI
+	- Terminal Command to install: brew install jadx
+	- To run the tool: jadx-gui

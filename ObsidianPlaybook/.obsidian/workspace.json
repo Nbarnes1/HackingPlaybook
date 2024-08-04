@@ -4,41 +4,8 @@
     "type": "split",
     "children": [
       {
-        "id": "18dfff864ebbf69d",
-        "type": "tabs",
-        "dimension": 50,
-        "children": [
-          {
-            "id": "9991353e4c1e13b2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ObsidianPlaybook.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b92c323a797ad76d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ObsidianPlaybook.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ],
-        "currentTab": 1
-      },
-      {
         "id": "b0f5d6a16c50b517",
         "type": "tabs",
-        "dimension": 50,
         "children": [
           {
             "id": "fb636665c94f7d0c",
@@ -46,24 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ObsidianPlaybook.md",
-                "mode": "preview",
+                "file": "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md",
+                "mode": "source",
                 "source": false
               }
             }
-          },
-          {
-            "id": "f0e7bebe45813bf6",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.6.5"
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -114,11 +70,12 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md"
+              }
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
@@ -138,6 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,6 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -175,7 +134,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md"
+              }
             }
           }
         ]
@@ -196,13 +157,16 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "f0e7bebe45813bf6",
+  "active": "fb636665c94f7d0c",
   "lastOpenFiles": [
+    "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
+    "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md",
+    "PJMT/Android/2. Android Lab Setup/3. Mac",
+    "ObsidianPlaybook.md",
     "Pwn College/Introduction and Usage.md",
     "Pwn College",
     "Pasted image 20240721163854.png",
     "PJMT/Device Requirements.md",
-    "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
     "PJMT/Android/2. Android Lab Setup/1. Windows",
     "PJMT/Android/1. Android Architecture/Application Security and Signing.md",
     "PJMT/Android/1. Android Architecture/Android Security Architecture.md",
@@ -222,7 +186,6 @@
     "Web/SQL Injection/SQL.md",
     "Web/File Inclusion/Local File Inclusion/Directory Traversal.md",
     "Web/File Inclusion/Local File Inclusion/PHP Wrappers.md",
-    "ObsidianPlaybook.md",
     "Web/Web.md",
     "Web/File Inclusion/Local File Inclusion/Local File Inclusion.md",
     "Web/Cross-Site Scripting (XSS)/_Index_of_Cross-Site Scripting (XSS).md",
@@ -232,8 +195,6 @@
     "Web/File Inclusion/Remote File Inclusion",
     "Web/File Inclusion/Local File Inclusion",
     "Web/SSTI/SSTI.md",
-    "Web/SQL Injection/SQL Injection.md",
-    "_Index_of_ObsidianPlaybook.md",
-    "Web/File Inclusion"
+    "Web/SQL Injection/SQL Injection.md"
   ]
 }
