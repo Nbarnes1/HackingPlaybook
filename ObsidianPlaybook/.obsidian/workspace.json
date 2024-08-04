@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ObsidianPlaybook.md",
+                "file": "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
                 "mode": "source",
                 "source": false
               }
@@ -96,12 +96,11 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ObsidianPlaybook.md"
+                "file": "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md"
               }
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
@@ -121,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ObsidianPlaybook.md",
+                "file": "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -138,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ObsidianPlaybook.md",
+                "file": "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -161,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ObsidianPlaybook.md"
+                "file": "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md"
               }
             }
           }
@@ -183,8 +182,11 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "6c7bedee47616202",
+  "active": "84655de69ce26952",
   "lastOpenFiles": [
+    "PJMT/Android/1. Android Architecture/Application Security and Signing.md",
+    "PJMT/Android/1. Android Architecture/Android Security Architecture.md",
+    "ObsidianPlaybook.md",
     "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
     "Pwn College/Introduction and Usage.md",
     "Pwn College",
@@ -193,15 +195,12 @@
     "PJMT/Android/2. Android Lab Setup",
     "PJMT/Resources.md",
     "PJMT/Intro.md",
-    "PJMT/Android/1. Android Architecture/Application Security and Signing.md",
     "Pasted image 20240721163854.png",
-    "PJMT/Android/1. Android Architecture/Android Security Architecture.md",
     "PJMT/Android/1. Android Architecture",
     "PJMT/Android",
     "Malware Dev/Test.md",
     "CSRF.md",
     "Fix DNS and IP in Kali.md",
-    "ObsidianPlaybook.md",
     "PJMT",
     "SSL.md",
     "Malware Dev",
