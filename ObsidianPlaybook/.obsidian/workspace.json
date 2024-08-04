@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md",
+                "file": "PJMT/Android/2. Android Lab Setup/4. Emulator Setup and Recommendations.md",
                 "mode": "source",
                 "source": false
               }
@@ -71,7 +71,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md"
+                "file": "PJMT/Android/2. Android Lab Setup/4. Emulator Setup and Recommendations.md"
               }
             }
           }
@@ -95,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md",
+                "file": "PJMT/Android/2. Android Lab Setup/4. Emulator Setup and Recommendations.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md",
+                "file": "PJMT/Android/2. Android Lab Setup/4. Emulator Setup and Recommendations.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md"
+                "file": "PJMT/Android/2. Android Lab Setup/4. Emulator Setup and Recommendations.md"
               }
             }
           }
@@ -159,8 +159,9 @@
   },
   "active": "fb636665c94f7d0c",
   "lastOpenFiles": [
-    "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
     "PJMT/Android/2. Android Lab Setup/3. Mac/Android - Mac Lab Setup.md",
+    "PJMT/Android/2. Android Lab Setup/4. Emulator Setup and Recommendations.md",
+    "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
     "PJMT/Android/2. Android Lab Setup/3. Mac",
     "ObsidianPlaybook.md",
     "Pwn College/Introduction and Usage.md",
@@ -194,7 +195,6 @@
     "Web/File Inclusion/Remote File Inclusion/Remote File Inclusion.md",
     "Web/File Inclusion/Remote File Inclusion",
     "Web/File Inclusion/Local File Inclusion",
-    "Web/SSTI/SSTI.md",
-    "Web/SQL Injection/SQL Injection.md"
+    "Web/SSTI/SSTI.md"
   ]
 }
