@@ -6,6 +6,7 @@
       {
         "id": "18dfff864ebbf69d",
         "type": "tabs",
+        "dimension": 50,
         "children": [
           {
             "id": "9991353e4c1e13b2",
@@ -20,31 +21,49 @@
             }
           },
           {
-            "id": "2cbcc0a7ddf7f70f",
+            "id": "b92c323a797ad76d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Pwn College/Introduction and Usage.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "84655de69ce26952",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
+                "file": "ObsidianPlaybook.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
+      },
+      {
+        "id": "b0f5d6a16c50b517",
+        "type": "tabs",
+        "dimension": 50,
+        "children": [
+          {
+            "id": "fb636665c94f7d0c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ObsidianPlaybook.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f0e7bebe45813bf6",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.6.5"
+              }
+            }
+          }
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -95,12 +114,11 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md"
-              }
+              "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -120,7 +138,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +154,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -159,9 +175,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -182,32 +196,33 @@
       "header-enhancer:Header Enhancer": false
     }
   },
-  "active": "84655de69ce26952",
+  "active": "f0e7bebe45813bf6",
   "lastOpenFiles": [
-    "PJMT/Android/1. Android Architecture/Application Security and Signing.md",
-    "PJMT/Android/1. Android Architecture/Android Security Architecture.md",
-    "ObsidianPlaybook.md",
-    "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
     "Pwn College/Introduction and Usage.md",
     "Pwn College",
-    "PJMT/Android/2. Android Lab Setup/1. Windows",
-    "PJMT/Device Requirements.md",
-    "PJMT/Android/2. Android Lab Setup",
-    "PJMT/Resources.md",
-    "PJMT/Intro.md",
     "Pasted image 20240721163854.png",
+    "PJMT/Device Requirements.md",
+    "PJMT/Android/2. Android Lab Setup/1. Windows/Android - Windows Lab Setup.md",
+    "PJMT/Android/2. Android Lab Setup/1. Windows",
+    "PJMT/Android/1. Android Architecture/Application Security and Signing.md",
+    "PJMT/Android/1. Android Architecture/Android Security Architecture.md",
+    "PJMT/Android/2. Android Lab Setup",
     "PJMT/Android/1. Android Architecture",
     "PJMT/Android",
-    "Malware Dev/Test.md",
-    "CSRF.md",
-    "Fix DNS and IP in Kali.md",
+    "conflict-files-obsidian-git.md",
+    "PJMT/Resources.md",
+    "PJMT/Intro.md",
     "PJMT",
+    "Fix DNS and IP in Kali.md",
     "SSL.md",
+    "CSRF.md",
+    "Malware Dev/Test.md",
     "Malware Dev",
     "Web/SQL Injection/Testing.md",
     "Web/SQL Injection/SQL.md",
     "Web/File Inclusion/Local File Inclusion/Directory Traversal.md",
     "Web/File Inclusion/Local File Inclusion/PHP Wrappers.md",
+    "ObsidianPlaybook.md",
     "Web/Web.md",
     "Web/File Inclusion/Local File Inclusion/Local File Inclusion.md",
     "Web/Cross-Site Scripting (XSS)/_Index_of_Cross-Site Scripting (XSS).md",
@@ -219,7 +234,6 @@
     "Web/SSTI/SSTI.md",
     "Web/SQL Injection/SQL Injection.md",
     "_Index_of_ObsidianPlaybook.md",
-    "Web/_Index_of_Web.md",
     "Web/File Inclusion"
   ]
 }
